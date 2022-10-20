@@ -4,13 +4,13 @@ from django.views import View
 from django.views.generic import TemplateView
 
 
-def main_page(request, *args, **kwargs):
-    return render(request, 'main/main_page.html', {})
+def index(request, *args, **kwargs):
+    return render(request, 'books/index.html', {})
 
 
 class About(TemplateView):
-    template_name = 'main/about.html'
+    template_name = 'books/about.html'
 
 
 class Contacts(TemplateView):
-    template_name = 'main/contacts.html'
+    template_name = 'books/contacts.html'
