@@ -1,0 +1,120 @@
+{% extends 'books/base.html' %}
+{% load static %}
+
+{% block css %}
+  <link rel="stylesheet" href="{% static '/bookshelf/css/normalize.css' %}">
+  <link rel="stylesheet" href="{% static '/bookshelf/css/style.css' %}">
+  <link rel="stylesheet" href="{% static '/bookshelf/css/media-1024.css' %}">
+  <link rel="stylesheet" href="{% static '/bookshelf/css/media-768.css' %}">
+  <link rel="stylesheet" href="{% static '/bookshelf/css/media-320.css' %}">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+{% endblock %}
+
+{% block content %}
+    <section class="book section">
+      <div class="container book__container">
+        <h2 class="book__title title-h2">Title book</h2>
+        <div class="book__content grid">
+          <div class="book__content-img"></div>
+          <div class="book__content-about">
+            <ul class="book__content-about-list">
+              <li class="book__content-about-item">
+                <p>Автор:</p>
+              </li>
+              <li class="book__content-about-item">
+                <p>ISBN:</p>
+              </li>
+              <li class="book__content-about-item">
+                <form>
+                  <p>
+                    Дата публикации:
+                    <input type="date" name="calendar">
+                    <input type="submit" value="Отправить">
+                  </p>
+                </form>
+              </li>
+              <li class="book__content-about-item">
+                <p>Жанр:</p>
+              </li>
+              <li class="book__content-about-item">
+                <p>Цикл:</p>
+              </li>
+              <li class="book__content-about-item">
+                <p>Серия:</p>
+              </li>
+              <li class="book__content-about-item">
+                <label for="status-select">Статус:</label>
+                <select name="status" id="status-select">
+                    <option value="">--Выберете статус--</option>
+                    <option value="reading">Читаю</option>
+                    <option value="read">Прочтена</option>
+                    <option value="wish_list">В листе ожидания</option>
+                    <option value="left">Брошена</option>
+                </select>
+              </li>
+              <li class="book__content-about-item">
+                <form>
+                  <p>
+                    Первое прочтение:
+                    <input type="date" name="calendar">
+                    <input type="submit" value="Отправить">
+                  </p>
+                </form>
+              </li>
+              <li class="book__content-about-item">
+                <form>
+                  <p>
+                    Второе прочтение:
+                    <input type="date" name="calendar">
+                    <input type="submit" value="Отправить">
+                  </p>
+                </form>
+              </li>
+              <li class="book__content-about-item">
+                <form>
+                  <p>
+                    Третье прочтение:
+                    <input type="date" name="calendar">
+                    <input type="submit" value="Отправить">
+                  </p>
+                </form>
+              </li>
+              <li class="book__content-about-item star-rating">
+                <p>Рейтинг:&nbsp;</p>
+                  <div class="star-rating__wrap">
+                    <input class="star-rating__input" id="star-rating-5" type="radio" name="rating" value="5">
+                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-5" title="5 out of 5 stars"></label>
+                    <input class="star-rating__input" id="star-rating-4" type="radio" name="rating" value="4">
+                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-4" title="4 out of 5 stars"></label>
+                    <input class="star-rating__input" id="star-rating-3" type="radio" name="rating" value="3">
+                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-3" title="3 out of 5 stars"></label>
+                    <input class="star-rating__input" id="star-rating-2" type="radio" name="rating" value="2">
+                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-2" title="2 out of 5 stars"></label>
+                    <input class="star-rating__input" id="star-rating-1" type="radio" name="rating" value="1">
+                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-1" title="1 out of 5 stars"></label>
+                  </div>
+              </li>
+              <li class="book__content-about-item">
+                <p>Скачать файл книги:</p>
+              </li>
+            </ul>
+          </div>
+          <div class="book__content-descr">
+            <strong>Аннотация</strong>
+            <p>
+              Всем нам снятся кошмары. Проснувшись, одни сразу забывают их, другие стараются забыть. Неспособные забыть прячут безумие своего подсознания вдали от всех. Бояться, что люди окрестят их сумасшедшими. При этом не страшатся сойти с ума в действительности, окружив себя больной фантазией скрытых бесов. А их нужно изредка выгуливать, что я и делаю. Все мои истории собраны из образов, пришедших ко мне в сновидениях. Пускай лучше мои демоны бродят по страницам написанных мною книг. <br>На мрачных междустрочных улочках им все дозволено. Здесь их владения и я их не способен контролировать. Под звуки хаоса они выплясывают на пепелище из человеческих страхов. Играют с воображением, выстраивая хрустальные сосуды. Наполняют их яростью, любовью, злобой, насилием и радостью, а затем швыряют о каменные стены под дикий гогот. Они такие какие есть и я их принимаю. Со своими бесами лучше быть в гармонии, иначе они завладеют тобой и выйдут на темные улицы реальных городов. <br>10 лет скалолазания питали мое подсознание самыми яркими впечатлениями. Горы стёрли все границы. На вершине ты чувствуешь, что нет ничего невозможного. Затем, я наконец осознал, что книги обладают магией гор и на их страницах возможно все.
+            </p>
+          </div>
+          <div class="book__content-review">
+            <strong>Рецензия</strong>
+              <figure>
+                <blockquote>
+                  <p>Words can be like X-rays, if you use them properly—they’ll go through anything. You read and you’re pierced.</p>
+                </blockquote>
+                <figcaption>—user_name</figcaption>
+              </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock %}

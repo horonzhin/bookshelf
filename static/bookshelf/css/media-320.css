@@ -315,4 +315,9 @@
 			line-height: 13px;
 			color: #E9E9E9;
 		}
+
+        .book__content-img {
+            height: 300px;
+            background-image: url(/static/bookshelf/img/projects-bg-card7.webp)
+        }
 	}

@@ -4,8 +4,16 @@ from django.views import View
 from django.views.generic import TemplateView
 
 
-def index(request, *args, **kwargs):
-    return render(request, 'books/index.html', {})
+class Index(TemplateView):
+    template_name = 'books/index.html'
+
+
+class BooksList(TemplateView):
+    template_name = 'books/books_list.html'
+
+
+class Book(TemplateView):
+    template_name = 'books/book.html'
 
 
 class About(TemplateView):

@@ -64,6 +64,25 @@
       height: 330px;
       background-image: url(/static/bookshelf/img/about-img-1024.webp);
     }
+
+    .book__content-img {
+      height: 600px;
+      background-image: url(/static/bookshelf/img/projects-bg-card7.webp);
+      grid-column: span 2;
+    }
+
+    .book__content-about {
+      grid-column: span 2;
+      grid-row: 2/2;
+    }
+
+    .book__content-descr {
+      grid-row: 3/3
+    }
+
+    .book__content-review {
+      grid-row: 4/4
+    }
   }
 
   @media (max-width: 1024px) {

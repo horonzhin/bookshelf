@@ -1,4 +1,4 @@
-@font-face {
+  @font-face {
     font-family: 'Roboto';
     src: local('Roboto Bold'), local('Roboto-Bold'),
       url('/static/bookshelf/fonts/Roboto-Bold.woff2') format('woff2'),
@@ -7,7 +7,7 @@
     font-weight: bold;
     font-style: normal;
   }
-  
+
   @font-face {
     font-family: 'Roboto';
     src: local('Roboto'), local('Roboto-Regular'),
@@ -17,7 +17,7 @@
     font-weight: normal;
     font-style: normal;
   }
-  
+
   @font-face {
     font-family: 'Roboto';
     src: local('Roboto Black'), local('Roboto-Black'),
@@ -27,7 +27,7 @@
     font-weight: 900;
     font-style: normal;
   }
-  
+
   @font-face {
     font-family: 'Roboto';
     src: local('Roboto Light'), local('Roboto-Light'),
@@ -37,7 +37,7 @@
     font-weight: 300;
     font-style: normal;
   }
-  
+
   @font-face {
     font-family: 'Roboto';
     src: local('Roboto Medium'), local('Roboto-Medium'),
@@ -47,7 +47,7 @@
     font-weight: 500;
     font-style: normal;
   }
-  
+
   @font-face {
     font-family: 'TT Firs Neue';
     src: local('TT Firs Neue Regular'), local('TTFirsNeue-Regular'),
@@ -57,7 +57,7 @@
     font-weight: normal;
     font-style: normal;
   }
-  
+
   @font-face {
     font-family: 'TT Firs Neue';
     src: local('TT Firs Neue Bold'), local('TTFirsNeue-Bold'),
@@ -67,7 +67,7 @@
     font-weight: bold;
     font-style: normal;
   }
-  
+
   @font-face {
     font-family: 'TT Firs Neue';
     src: local('TT Firs Neue Medium'), local('TTFirsNeue-Medium'),
@@ -77,7 +77,7 @@
     font-weight: 500;
     font-style: normal;
   }
-  
+
   /* ОБНУЛЕНИЕ */
 
   * {
@@ -85,7 +85,7 @@
     margin: 0;
     border: 0;
   }
-  
+
   *,
   *::before,
   *::after {
@@ -93,7 +93,7 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
   }
-  
+
   body,
   h1,
   h2,
@@ -110,33 +110,33 @@
   dd {
     margin: 0;
   }
-  
+
   :focus, :active {
     outline: none;
   }
-  
+
   html {
     box-sizing: border-box;
     scroll-behavior: smooth;
   }
-  
+
   body {
     font-family: 'Roboto', 'TT Firs Neue', sans-serif;
   }
-  
+
   nav,
   footer,
   header,
   aside {
     display: block;
   }
-  
+
   input,
   button,
   textarea {
     font-family: inherit;
   }
-  
+
   input[type="number"]::-webkit-outer-spin-button,
   input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -147,19 +147,19 @@
     appearance: none;
     -moz-appearance: textfield;
   }
-  
+
   button {
     cursor: pointer;
   }
-  
+
   a {
     text-decoration: none;
   }
-  
+
   a:focus, a:active {
     outline: none;
   }
-  
+
   ul li {
     list-style: none;
   }
@@ -187,25 +187,25 @@
   .section {
     padding: 68px 0;
   }
-  
+
   .container {
     margin: 0 auto;
     padding: 0 15px;
     max-width: 1320px;
   }
-  
+
   .flex {
     display: flex;
   }
-  
+
   .grid {
     display: grid;
   }
-  
+
   .btn {
     background-color: transparent;
   }
-  
+
   .title-h1 {
     font-family: 'TT Firs Neue';
     font-style: normal;
@@ -214,7 +214,7 @@
     line-height: 104%;
     color: var(--white);
   }
-  
+
   .title-h2 {
     font-family: 'TT Firs Neue';
     font-style: normal;
@@ -223,11 +223,11 @@
     line-height: 31px;
     color: var(--black);
   }
-  
+
   .header {
     background: var(--black);
   }
-  
+
   .primary-btn,
   .secondary-btn {
     position: relative;
@@ -257,8 +257,7 @@
     border: 3px solid var(--dark_orange);
     transition: opacity .2s linear, visibility .2s linear;
   }
-  
-  
+
   .primary-btn {
     padding: 16px 22px;
     background: var(--orange);
@@ -277,8 +276,7 @@
   .primary-btn:active {
     background-color: var(--dark_orange);
   }
-  
-  
+
   .secondary-btn {
     padding: 13px 19px;
     border: 3px solid var(--orange);
@@ -297,8 +295,7 @@
     background-color: var(--dark_orange);
     outline: 3px solid var(--dark_orange);
   }
-  
-  
+
   .primary-link,
   .secondary-link {
     position: relative;
@@ -322,7 +319,7 @@
     z-index: -1;
     transition: opacity .2s linear, visibility .2s linear ;
   }
-  
+
   .primary-link:hover,
   .secondary-link:hover {
     color: var(--orange);
@@ -337,7 +334,7 @@
   .secondary-link:active {
     color: var(--dark_orange);
   }
-  
+
   .primary-link {
     font-style: normal;
     font-weight: normal;
@@ -349,8 +346,7 @@
   .primary-link::after {
     background: var(--medium_orange);
   }
-  
-  
+
   .secondary-link {
     font-style: normal;
     font-weight: normal;
@@ -362,7 +358,7 @@
   .secondary-link::after {
     background: var(--light_pink);
   }
-  
+
   .dark-input,
   .light-input {
     padding: 15px 0 16px 23px;
@@ -390,22 +386,22 @@
   .light-input:focus-visible {
     outline: 1px solid var(--orange);
   }
-  
+
   .dark-input {
     background: var(--grey);
     color: var(--white);
   }
-  
+
   .light-input {
     background: var(--dark_white);
     color: var(--black);
   }
-  
+
   .header__logo:focus-visible,
   .footer__logo:focus-visible {
     outline: 3px solid var(--orange);
   }
-  
+
   .big-tag,
   .small-tag {
     position: absolute;
@@ -418,23 +414,23 @@
     color: var(--white);
     z-index: 10;
   }
-  
+
   .big-tag {
     padding: 7px 15px;
     top: 15px;
     right: 15px;
   }
-  
+
   .small-tag {
     padding: 6px 14px;
     top: 7px;
     right: 7px;
   }
-  
+
   .mr-auto {
     margin-right: auto;
   }
-  
+
   html.overflow--lock,
   body.overflow--lock {
     overflow-y: hidden;
@@ -451,7 +447,7 @@
   .header__bottom-container {
     display: none;
   }
-  
+
   .header__nav {
     justify-content: space-between;
     align-items: center;
@@ -500,7 +496,7 @@
   svg path {
     transition: fill .2s linear;
   }
-        
+
   .header__search-input-tablet {
     padding: 5px 0;
     border-bottom: 1px solid var(--white);
@@ -532,7 +528,7 @@
   .header__search-input-tablet:active {
     border-color: var(--dark_orange);
   }
-        
+
   .header__search-container-tablet {
     display: none;
     position: absolute;
@@ -647,16 +643,24 @@
   /* ------------------------------ */
 
   /* about */
-  
+
   .about {
     padding: 30px 0 69px 0;
     background: var(--black);
+  }
+
+  .about__sheet {
+    background: var(--white);
   }
 
   .about__title {
     margin-bottom: 5px;
     font-family: 'TT Firs Neue';
     color: var(--white);
+  }
+
+  .about__title-sheet {
+    color: var(--black);
   }
 
   .about__content-descr {
@@ -668,6 +672,10 @@
     font-size: 16px;
     line-height: 28px;
     color: var(--light_grey);
+  }
+
+  .about__content-descr-sheet {
+    color: var(--dark_grey);
   }
 
   .about__content-form {
@@ -695,6 +703,10 @@
     color: var(--white);
   }
 
+  .about__content-form-descr-sheet {
+    color: var(--black);
+  }
+
   .about__form-input {
     margin-right: 30px;
     max-width: 474px;
@@ -717,6 +729,10 @@
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(2, minmax(300px, auto));
     gap: 30px;
+  }
+
+  .projects__cards-container-sheet {
+    grid-template-rows: repeat(2, minmax(400px, auto));
   }
 
   .small-cards-container {
@@ -790,7 +806,7 @@
   .projects__cards-item-date svg {
     margin-right: 6px;
   }
-  
+
   .projects__cards-item_4,
   .projects__cards-item_5 {
     padding: 22px 29px 30px 29px;
@@ -835,7 +851,7 @@
   .projects__cards-item_5 .projects__cards-item-btn {
     max-width: max-content;
   }
-  
+
   .projects__cards-item_4 {
     grid-column: 3/5;
     grid-row: 1/2;
@@ -846,6 +862,11 @@
     grid-column: 1/3;
     grid-row: 2/3;
     background-image: url(/static/bookshelf/img/projects-bg-card5.webp);
+  }
+
+  .projects__cards-item-sheet {
+    grid-column: auto;
+    grid-row: auto;
   }
 
   /* ------------------------------ */
@@ -1028,7 +1049,7 @@
     resize: none;
     height: 150px;
   }
-  
+
   /* ------------------------------ */
 
   /* footer */
@@ -1105,4 +1126,116 @@
 
   .footer__bottom-container {
     display: none;
+  }
+
+  /* ------------------------------ */
+
+  /* book */
+
+  .book__title {
+    margin-bottom: 5px;
+    font-family: 'TT Firs Neue';
+    color: var(--black);
+  }
+
+  .book__content {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+
+  .book__content-img {
+    width: 100%;
+    height: 100%;
+    background-image: url(/static/bookshelf/img/projects-bg-card7.webp);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    grid-column: 1/1;
+    grid-row: 1/1;
+  }
+
+  .book__content-about {
+    grid-column: 2/2;
+    grid-row: 1/1;
+  }
+
+  .book__content-about-list {
+    margin-left: 20px
+  }
+
+  .book__content-about-item {
+    margin-bottom: 20px
+  }
+
+  .book__content-descr {
+    margin-right: 30px;
+    width: 100%;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 28px;
+    color: var(--black);
+    grid-column: span 2;
+    grid-row: 2/2
+  }
+
+  .book__content-review {
+    padding: 20px;
+    grid-column: span 2;
+    grid-row: 3/3
+  }
+
+  .star-rating {
+    display: flex;
+    align-item: center;
+  }
+
+  .star-rating__wrap {
+  	display: inline-block;
+  	font-size: 1rem;
+  }
+
+  .star-rating__wrap:after {
+  	content: "";
+  	display: table;
+  	clear: both;
+  }
+
+  .star-rating__ico {
+  	float: right;
+  	padding-left: 2px;
+  	cursor: pointer;
+  	color: #FFB300;
+  }
+
+  .star-rating__ico:last-child {
+  	padding-left: 0;
+  }
+
+  .star-rating__input {
+  	display: none;
+  }
+
+  .star-rating__ico:hover:before,
+  .star-rating__ico:hover ~ .star-rating__ico:before,
+  .star-rating__input:checked ~ .star-rating__ico:before {
+  	content: "\f005";
+  }
+
+  blockquote {
+    margin: 0;
+  }
+
+  blockquote p {
+    padding: 15px;
+    background: #eee;
+    border-radius: 5px;
+  }
+
+  blockquote p::before {
+    content: '\201C';
+  }
+
+  blockquote p::after {
+    content: '\201D';
   }
