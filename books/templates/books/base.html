@@ -15,24 +15,12 @@
   <meta name="msapplication-TileColor" content="#000000">
   <meta name="theme-color" content="#000000">
   <link rel="shortcut icon" href="{% static '/bookshelf/img/favicons/favicon.ico' %}" type="image/x-icon">
-  <!-- fonts -->
-  <link rel="preload" href="{% static '/bookshelf/fonts/Roboto-Black.woff2' %}" as="font">
-  <link rel="preload" href="{% static '/bookshelf/fonts/Roboto-Black.woff' %}" as="font">
-  <link rel="preload" href="{% static '/bookshelf/fonts/Roboto-Bold.woff2' %}" as="font">
-  <link rel="preload" href="{% static '/bookshelf/fonts/Roboto-Bold.woff' %}" as="font">
-  <link rel="preload" href="{% static '/bookshelf/fonts/Roboto-Light.woff2' %}" as="font">
-  <link rel="preload" href="{% static '/bookshelf/fonts/Roboto-Light.woff' %}" as="font">
-  <link rel="preload" href="{% static '/bookshelf/fonts/Roboto-Medium.woff2' %}" as="font">
-  <link rel="preload" href="{% static '/bookshelf/fonts/Roboto-Medium.woff' %}" as="font">
-  <link rel="preload" href="{% static '/bookshelf/fonts/Roboto-Regular.woff2' %}" as="font">
-  <link rel="preload" href="{% static '/bookshelf/fonts/Roboto-Regular.woff' %}" as="font">
-  <link rel="preload" href="{% static '/bookshelf/fonts/TTFirsNeue-Bold.woff2' %}" as="font">
-  <link rel="preload" href="{% static '/bookshelf/fonts/TTFirsNeue-Bold.woff' %}" as="font">
-  <link rel="preload" href="{% static '/bookshelf/fonts/TTFirsNeue-Medium.woff2' %}" as="font">
-  <link rel="preload" href="{% static '/bookshelf/fonts/TTFirsNeue-Medium.woff' %}" as="font">
-  <link rel="preload" href="{% static '/bookshelf/fonts/TTFirsNeue-Regular.woff2' %}" as="font">
-  <link rel="preload" href="{% static '/bookshelf/fonts/TTFirsNeue-Regular.woff' %}" as="font">
   <!-- styles -->
+  <link rel="stylesheet" href="{% static '/bookshelf/css/normalize.css' %}">
+  <link rel="stylesheet" href="{% static '/bookshelf/css/style.css' %}">
+  <link rel="stylesheet" href="{% static '/bookshelf/css/media-1024.css' %}">
+  <link rel="stylesheet" href="{% static '/bookshelf/css/media-768.css' %}">
+  <link rel="stylesheet" href="{% static '/bookshelf/css/media-320.css' %}">
   {% block css %} {% endblock %}
   <title>Bookshelf</title>
 </head>
