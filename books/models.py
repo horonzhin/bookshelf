@@ -29,7 +29,7 @@ class Cycle(models.Model):
 
     class Meta:
         verbose_name = 'Цикл'
-        verbose_name_plural = 'Циклов'
+        verbose_name_plural = 'Циклы'
 
     def __str__(self):
         return self.name
@@ -40,7 +40,7 @@ class Series(models.Model):
 
     class Meta:
         verbose_name = 'Серия'
-        verbose_name_plural = 'Серий'
+        verbose_name_plural = 'Серии'
 
     def __str__(self):
         return self.name
@@ -59,21 +59,21 @@ class Status(models.Model):
 
 class Book(models.Model):
     title = models.CharField(max_length=100, db_index=True, verbose_name='Название')
-    cover = models.ImageField(upload_to='books_cover', verbose_name='Обложка')
     author = models.ManyToManyField(Author, related_name='book', verbose_name='Автор')
-    isbn = models.IntegerField(max_length=30, db_index=True, verbose_name='ISBN')
-    published = models.DateTimeField(default=None, null=True, verbose_name='Дата публикации')
+    cover = models.ImageField(upload_to='book_covers', verbose_name='Обложка')
+    isbn = models.BigIntegerField(db_index=True, verbose_name='ISBN')
+    published = models.DateField(blank=True, default=None, null=True, verbose_name='Дата публикации')
     genre = models.ManyToManyField(Genre, related_name='book', verbose_name='Жанр')
-    cycle = models.ForeignKey(Cycle, default=None, null=True, on_delete=models.CASCADE,
+    cycle = models.ForeignKey(Cycle, blank=True, default=None, null=True, on_delete=models.CASCADE,
                               related_name='book', verbose_name='Цикл')
-    series = models.ForeignKey(Series, default=None, null=True, on_delete=models.CASCADE,
+    series = models.ForeignKey(Series, blank=True, default=None, null=True, on_delete=models.CASCADE,
                                related_name='book', verbose_name='Серия')
-    status = models.ForeignKey(Status, on_delete=models.CASCADE, related_name='book', verbose_name='Статус')
-    first_reading = models.DateTimeField(default=None, null=True, verbose_name='Первое прочтение')
-    second_reading = models.DateTimeField(default=None, null=True, verbose_name='Второе прочтение')
-    third_reading = models.DateTimeField(default=None, null=True, verbose_name='Третье прочтение')
-    rating = models.IntegerField(default=None, null=True, verbose_name='Рейтинг')
     annotation = models.TextField(verbose_name='Аннотация')
+    status = models.ForeignKey(Status, on_delete=models.CASCADE, related_name='book', verbose_name='Статус')
+    rating = models.IntegerField(blank=True, default=None, null=True, verbose_name='Рейтинг')
+    first_reading = models.DateField(blank=True, default=None, null=True, verbose_name='Первое прочтение')
+    second_reading = models.DateField(blank=True, default=None, null=True, verbose_name='Второе прочтение')
+    third_reading = models.DateField(blank=True, default=None, null=True, verbose_name='Третье прочтение')
 
     class Meta:
         db_table = 'Книги'

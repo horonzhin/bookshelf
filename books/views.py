@@ -41,3 +41,9 @@ class About(TemplateView):
 
 class Contacts(TemplateView):
     template_name = 'books/contacts.html'
+
+
+# вариант представления через функцию
+# def book(request, *args, **kwargs):
+#     context = ['context']
+#     return render(request, 'books/book.html', {'context': context})
