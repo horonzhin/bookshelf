@@ -76,7 +76,6 @@ class Book(models.Model):
     third_reading = models.DateField(blank=True, default=None, null=True, verbose_name='Третье прочтение')
 
     class Meta:
-        db_table = 'Книги'
         ordering = ['title']
         verbose_name = 'Книга'
         verbose_name_plural = 'Книги'

@@ -16,16 +16,17 @@
   <meta name="theme-color" content="#000000">
   <link rel="shortcut icon" href="{% static '/bookshelf/img/favicons/favicon.ico' %}" type="image/x-icon">
   <!-- styles -->
+  <link rel="stylesheet" href="{% static '/bookshelf/css/auth.css' %}">
   <link rel="stylesheet" href="{% static '/bookshelf/css/normalize.css' %}">
   <link rel="stylesheet" href="{% static '/bookshelf/css/style.css' %}">
   <link rel="stylesheet" href="{% static '/bookshelf/css/media-1024.css' %}">
   <link rel="stylesheet" href="{% static '/bookshelf/css/media-768.css' %}">
   <link rel="stylesheet" href="{% static '/bookshelf/css/media-320.css' %}">
-  {% block css %} {% endblock %}
-  <title>Bookshelf</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+  <title>Bookshelf - Авторизация</title>
 </head>
 
-<body>
+<body class="bg-primary">
 
   <header class="header">
     <div class="header__container container">
@@ -210,6 +211,10 @@
   <script src="{% static '/bookshelf/js/gsap.min.js' %}"></script>
   <!-- main -->
   <script src="{% static '/bookshelf/js/main.js' %}"></script>
+  <!-- auth -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script src="{% static '/bookshelf/js/auth_admin.js' %}"></script>
 
 </body>
 

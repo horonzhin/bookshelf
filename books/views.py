@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import TemplateView
+from books.models import Book
 
 
 class Index(TemplateView):
@@ -10,6 +11,12 @@ class Index(TemplateView):
 
 class BooksList(TemplateView):
     template_name = 'books/books_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        book = Book.objects.all()
+        context['book'] = book
+        return context
 
 
 # чтобы отобразить список данных из базы данных используем класс ListView. Класс ниже отвечает за отображение списка
@@ -23,7 +30,7 @@ class BooksList(TemplateView):
 #     context_object_name = 'books_list'
 
 
-class Book(TemplateView):
+class BookDetail(TemplateView):
     template_name = 'books/book_detail.html'
 
 # Класс ниже отвечает за детальное отображение отдельных страниц книг на примере одного шаблона.
