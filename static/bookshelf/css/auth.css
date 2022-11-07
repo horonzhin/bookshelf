@@ -536,7 +536,7 @@ fieldset:disabled a.btn-auth {
     right: 0;
     left: 0;
     z-index: 1;
-    height: calc(1.5em + 0.75rem + 0px);
+    height: calc(1.5em + 0.75rem + 0.75rem);
     padding: 0.375rem 0.75rem;
     font-weight: 400;
     line-height: 2.1;
@@ -553,7 +553,7 @@ fieldset:disabled a.btn-auth {
     bottom: 0;
     z-index: 3;
     display: block;
-    height: calc(1.5em + 0.75rem);
+    height: calc(1.5em + 0.75rem + 0.6rem);
     padding: 0.375rem 0.75rem;
     line-height: 2.1;
     color: var(--medium_grey);
@@ -805,8 +805,8 @@ a.badge-secondary:focus, a.badge-secondary.focus {
 
     .container__profile {
         display: flex;
-        justify-content: space-around;
-        align-items: center;
+        justify-content: space-evenly;
+        align-items: flex-start;
     }
 
     .profile-left {
