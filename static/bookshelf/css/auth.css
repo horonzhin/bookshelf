@@ -200,7 +200,7 @@ a.close.disabled {
 }
 
 .card-header {
-    padding: 0.75rem 1.25rem;
+    padding: 1.75rem 1.25rem;
     margin-bottom: 0;
     background-color: var(--dark_white);
     border-bottom: 1px solid var(--light_grey);
@@ -329,7 +329,7 @@ input[type=month].form-control {
     opacity: 1;
 }
 
-.btn {
+.btn-auth {
     font-family: 'Roboto', 'TT Firs Neue', sans-serif;
     display: inline-block;
     font-weight: 400;
@@ -350,30 +350,30 @@ input[type=month].form-control {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .btn {
+    .btn-auth {
         transition: none;
     }
 }
 
-.btn:hover {
+.btn-auth:hover {
     color: var(--black);
     text-decoration: none;
 }
 
-.btn:focus, .btn.focus {
+.btn-auth:focus, .btn-auth.focus {
     outline: 0;
 }
 
-.btn.disabled, .btn:disabled {
+.btn-auth.disabled, .btn-auth:disabled {
     opacity: 0.65;
 }
 
-.btn:not(:disabled):not(.disabled) {
+.btn-auth:not(:disabled):not(.disabled) {
     cursor: pointer;
 }
 
-a.btn.disabled,
-fieldset:disabled a.btn {
+a.btn-auth.disabled,
+fieldset:disabled a.btn-auth {
     pointer-events: none;
 }
 
@@ -606,7 +606,7 @@ a.badge:hover, a.badge:focus {
     display: none;
 }
 
-.btn .badge {
+.btn-auth .badge {
     position: relative;
     top: -1px;
 }
@@ -808,7 +808,6 @@ a.badge-secondary:focus, a.badge-secondary.focus {
         justify-content: space-around;
         align-items: center;
     }
-
 
     .profile-left {
         margin-right: 30px;

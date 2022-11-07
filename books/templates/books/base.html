@@ -46,12 +46,17 @@
           </li>
           <li class="header__nav-list-item">
             <a class="header__item-link primary-link" href="{% url 'books:books_list' %}">
-              Книжная полка читателя
+              Полка читателя
             </a>
           </li>
           <li class="header__nav-list-item">
             <a class="header__item-link primary-link" href="{% url 'contacts' %}">
               Контакты
+            </a>
+          </li>
+          <li class="header__nav-list-item">
+            <a class="header__item-link primary-link" href="{% url 'users:login' %}">
+              Войти
             </a>
           </li>
         </ul>
@@ -95,12 +100,17 @@
           </li>
           <li class="header-bottom__nav-list-item">
             <a class="header-bottom__item-link primary-link" href="{% url 'books:books_list' %}">
-              Книжная полка читателя
+              Полка читателя
             </a>
           </li>
           <li class="header-bottom__nav-list-item">
             <a class="header-bottom__item-link primary-link" href="{% url 'contacts' %}">
               Контакты
+            </a>
+          </li>
+          <li class="header-bottom__nav-list-item">
+            <a class="header-bottom__item-link primary-link" href="{% url 'users:login' %}">
+              Войти
             </a>
           </li>
         </ul>
@@ -126,12 +136,17 @@
           </li>
           <li class="nav-mobile__list-item">
             <a class="nav-mobile__list-item-link" href="{% url 'books:books_list' %}">
-              Книжная полка читателя
+              Полка читателя
             </a>
           </li>
           <li class="nav-mobile__list-item">
             <a class="nav-mobile__list-item-link" href="{% url 'contacts' %}">
               Контакты
+            </a>
+          </li>
+          <li class="nav-mobile__list-item">
+            <a class="nav-mobile__list-item-link" href="{% url 'users:login' %}">
+              Войти
             </a>
           </li>
           <li class="nav-mobile__list-item nav-mobile__list-item-phone">
@@ -214,3 +229,5 @@
 </body>
 
 </html>
+
+<!--todo = не работают переходы в хэдере в выпадающем меню для nav-mobile-->
