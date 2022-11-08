@@ -3,10 +3,18 @@
 
 {% block content %}
 <div class="container-auth container-login">
-  {% if form.non_field_errors %}
-  <div class="alert alert-warning alert-dismissible" role="alert">
-    {{ form.non_field_errors }} <!-- тэг для вывода ошибок если они появятся -->
-<!--    <strong>Holy guacamole!</strong> You should check in on some of those fields below.-->
+  {% if messages or form.non_field_errors %} <!-- если сообщения и ошибки выводим их -->
+  <div class="alert
+  {% if messages %} alert-success {% else %} alert-warning {% endif %}
+  alert-dismissible" role="alert">
+  <!-- если сообщения, то зеленым, если ошибки, то красным -->
+    {% if messages %} <!-- если сообщения выводим их -->
+      {% for message in messages %}
+        {{ message }}
+      {% endfor %}
+    {% else %} <!-- иначе выводим ошибки -->
+      {{ form.non_field_errors }}
+    {% endif %}
       <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>

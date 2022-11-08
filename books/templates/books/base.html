@@ -54,12 +54,8 @@
               Контакты
             </a>
           </li>
-          <li class="header__nav-list-item">
-            <a class="header__item-link primary-link" href="{% url 'users:login' %}">
-              Войти
-            </a>
-          </li>
-          <li class="dropdown">
+          {% if user.is_authenticated %}
+            <li class="dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fas fa-user-circle"></i>
@@ -67,11 +63,20 @@
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li><a class="dropdown-item" href="{% url 'users:profile' %}">Профиль</a></li>
               <li><a class="dropdown-item" href="#">Заказы</a></li>
-              <li><a class="dropdown-item" href="#">Админ-панель</a></li>
+              {% if user.is_superuser or user.is_staff %}
+                <li><a class="dropdown-item" href="{% url 'admin:index' %}">Админ-панель</a></li>
+              {% endif %}
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Выйти</a></li>
+              <li><a class="dropdown-item" href="{% url 'users:logout' %}">Выйти</a></li>
             </ul>
           </li>
+          {% else %}
+            <li class="header__nav-list-item">
+            <a class="header__item-link primary-link" href="{% url 'users:login' %}">
+              Войти
+            </a>
+          </li>
+          {% endif %}
         </ul>
         <div class="header__nav-list-item item-search flex">
           <div class="header__search-container-tablet">
@@ -121,12 +126,8 @@
               Контакты
             </a>
           </li>
-          <li class="header-bottom__nav-list-item">
-            <a class="header-bottom__item-link primary-link" href="{% url 'users:login' %}">
-              Войти
-            </a>
-          </li>
-          <li class="dropdown">
+          {% if user.is_authenticated %}
+            <li class="dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-bottom" role="button"
                data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fas fa-user-circle"></i>
@@ -134,11 +135,20 @@
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown-bottom">
               <li><a class="dropdown-item" href="{% url 'users:profile' %}">Профиль</a></li>
               <li><a class="dropdown-item" href="#">Заказы</a></li>
-              <li><a class="dropdown-item" href="#">Админ-панель</a></li>
+              {% if user.is_superuser or user.is_staff %}
+                <li><a class="dropdown-item" href="{% url 'admin:index' %}">Админ-панель</a></li>
+              {% endif %}
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Выйти</a></li>
+              <li><a class="dropdown-item" href="{% url 'users:logout' %}">Выйти</a></li>
             </ul>
           </li>
+          {% else %}
+            <li class="header-bottom__nav-list-item">
+            <a class="header-bottom__item-link primary-link" href="{% url 'users:login' %}">
+              Войти
+            </a>
+          </li>
+          {% endif %}
         </ul>
       </nav>
       <nav class="header-bottom__nav-mobile nav-mobile">
@@ -170,12 +180,8 @@
               Контакты
             </a>
           </li>
-          <li class="nav-mobile__list-item">
-            <a class="nav-mobile__list-item-link" href="{% url 'users:login' %}">
-              Войти
-            </a>
-          </li>
-          <li class="dropdown">
+          {% if user.is_authenticated %}
+            <li class="dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-mobile" role="button"
                data-bs-toggle="dropdown" aria-expanded="false">
               <i class="fas fa-user-circle"></i>
@@ -183,11 +189,20 @@
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown-mobile">
               <li><a class="dropdown-item" href="{% url 'users:profile' %}">Профиль</a></li>
               <li><a class="dropdown-item" href="#">Заказы</a></li>
-              <li><a class="dropdown-item" href="#">Админ-панель</a></li>
+              {% if user.is_superuser or user.is_staff %}
+                <li><a class="dropdown-item" href="{% url 'admin:index' %}">Админ-панель</a></li>
+              {% endif %}
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Выйти</a></li>
+              <li><a class="dropdown-item" href="{% url 'users:logout' %}">Выйти</a></li>
             </ul>
           </li>
+          {% else %}
+            <li class="nav-mobile__list-item">
+            <a class="nav-mobile__list-item-link" href="{% url 'users:login' %}">
+              Войти
+            </a>
+          </li>
+          {% endif %}
           <li class="nav-mobile__list-item nav-mobile__list-item-phone">
             <a class="nav-mobile__list-item-link-phone" href="tel:+79215713532">
               <svg width="16" height="16" viewbox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">

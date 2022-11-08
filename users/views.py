@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect
-from django.contrib import auth
+from django.contrib import auth, messages
 from django.urls import reverse
 from django.views import View
 from users.models import User
@@ -29,18 +29,21 @@ class Login(View):
 
 
 class Registration(View):
+    title = 'Bookshelf - Регистрация'
 
     def get(self, request):
         form = UserRegistrationForm()
-        title = 'Bookshelf - Регистрация'
-        return render(request, 'users/register.html', context={'form': form, 'title': title})
+        return render(request, 'users/register.html', context={'form': form, 'title': self.title})
 
     def post(self, request):
         form = UserRegistrationForm(data=request.POST)
 
         if form.is_valid():
             form.save()
+            messages.success(request, 'Поздравляю! Вы успешно зарегистрировались.')
             return HttpResponseRedirect(reverse('users:login'))
+
+        return render(request, 'users/register.html', context={'form': form, 'title': self.title})
 
 
 class Profile(View):
@@ -62,6 +65,11 @@ class Profile(View):
             return HttpResponseRedirect(reverse('users:profile'))
         else:
             print(form.errors)
+
+
+def logout(request):
+    auth.logout(request)
+    return HttpResponseRedirect(reverse('index'))
 
 
 # вариант представления через функцию
