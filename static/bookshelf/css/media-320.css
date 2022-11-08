@@ -238,6 +238,7 @@
 		}
 		.contacts .contacts__title {
 			margin-bottom: 14px;
+			margin-top: 14px;
 		}
 		.contacts .contacts__map {
 			height: 472px;

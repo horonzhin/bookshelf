@@ -115,7 +115,6 @@ a {
     width: 100%;
     padding-right: 0.75rem;
     padding-left: 0.75rem;
-    padding-top: 50px;
     padding-bottom: 50px;
     margin-right: auto;
     margin-left: auto;
@@ -130,6 +129,7 @@ a {
 }
 
 .alert-warning {
+    margin-top: 50px;
     color: #856404;
     background-color: #fff3cd;
     border-color: #ffeeba;
@@ -472,6 +472,8 @@ fieldset:disabled a.btn-auth {
 }
 
 .container__profile {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
     display: block;
 }
 

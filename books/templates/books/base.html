@@ -59,6 +59,19 @@
               Войти
             </a>
           </li>
+          <li class="dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-user-circle"></i>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="{% url 'users:profile' %}">Профиль</a></li>
+              <li><a class="dropdown-item" href="#">Заказы</a></li>
+              <li><a class="dropdown-item" href="#">Админ-панель</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Выйти</a></li>
+            </ul>
+          </li>
         </ul>
         <div class="header__nav-list-item item-search flex">
           <div class="header__search-container-tablet">
@@ -113,6 +126,19 @@
               Войти
             </a>
           </li>
+          <li class="dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-bottom" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-user-circle"></i>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown-bottom">
+              <li><a class="dropdown-item" href="{% url 'users:profile' %}">Профиль</a></li>
+              <li><a class="dropdown-item" href="#">Заказы</a></li>
+              <li><a class="dropdown-item" href="#">Админ-панель</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Выйти</a></li>
+            </ul>
+          </li>
         </ul>
       </nav>
       <nav class="header-bottom__nav-mobile nav-mobile">
@@ -148,6 +174,19 @@
             <a class="nav-mobile__list-item-link" href="{% url 'users:login' %}">
               Войти
             </a>
+          </li>
+          <li class="dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-mobile" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fas fa-user-circle"></i>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown-mobile">
+              <li><a class="dropdown-item" href="{% url 'users:profile' %}">Профиль</a></li>
+              <li><a class="dropdown-item" href="#">Заказы</a></li>
+              <li><a class="dropdown-item" href="#">Админ-панель</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Выйти</a></li>
+            </ul>
           </li>
           <li class="nav-mobile__list-item nav-mobile__list-item-phone">
             <a class="nav-mobile__list-item-link-phone" href="tel:+79215713532">
@@ -225,6 +264,13 @@
   <script src="{% static '/bookshelf/js/gsap.min.js' %}"></script>
   <!-- main -->
   <script src="{% static '/bookshelf/js/main.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+          crossorigin="anonymous">
+  </script>
+  <script src="{% static '/bookshelf/js/jquery.min.js' %}"></script>
+  <script src="{% static '/bookshelf/js/fontawesome-icons.js' %}" crossorigin="anonymous"></script>
 
 </body>
 

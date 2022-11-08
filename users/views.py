@@ -7,11 +7,11 @@ from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 
 
 class Login(View):
+    title = 'Bookshelf - Авторизация'
 
     def get(self, request):
         form = UserLoginForm()
-        title = 'Bookshelf - Авторизация'
-        return render(request, 'users/login.html', context={'form': form, 'title': title})
+        return render(request, 'users/login.html', context={'form': form, 'title': self.title})
 
     def post(self, request):
         form = UserLoginForm(data=request.POST)
@@ -24,6 +24,8 @@ class Login(View):
             if user:
                 auth.login(request, user)
                 return HttpResponseRedirect(reverse('index'))
+
+        return render(request, 'users/login.html', context={'form': form, 'title': self.title})
 
 
 class Registration(View):
