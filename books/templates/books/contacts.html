@@ -54,3 +54,9 @@
       </div>
     </section>
 {% endblock %}
+
+{% block script_end %}
+  <!-- map -->
+  <script src="https://api-maps.yandex.ru/2.1/?apikey=&lang=ru_RU&_v=20221008080346"></script>
+  <script src="{% static '/bookshelf/js/map.js' %}"></script>
+{% endblock %}

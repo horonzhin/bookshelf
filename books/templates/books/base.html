@@ -16,13 +16,14 @@
   <meta name="theme-color" content="#000000">
   <link rel="shortcut icon" href="{% static '/bookshelf/img/favicons/favicon.ico' %}" type="image/x-icon">
   <!-- styles -->
+  {% block css %} {% endblock %}
   <link rel="stylesheet" href="{% static '/bookshelf/css/normalize.css' %}">
   <link rel="stylesheet" href="{% static '/bookshelf/css/style.css' %}">
   <link rel="stylesheet" href="{% static '/bookshelf/css/media-1024.css' %}">
   <link rel="stylesheet" href="{% static '/bookshelf/css/media-768.css' %}">
   <link rel="stylesheet" href="{% static '/bookshelf/css/media-320.css' %}">
-  {% block css %} {% endblock %}
-  <title>Bookshelf</title>
+  {% block script_in_head %} {% endblock %}
+  <title>Bookshelf {{ title }}</title>
 </head>
 
 <body>
@@ -272,23 +273,21 @@
     </div>
   </footer>
 
-  <!-- map -->
-  <script src="https://api-maps.yandex.ru/2.1/?apikey=&lang=ru_RU&_v=20221008080346"></script>
-  <script src="{% static '/bookshelf/js/map.js' %}"></script>
   <!-- gsap -->
   <script src="{% static '/bookshelf/js/gsap.min.js' %}"></script>
   <!-- main -->
   <script src="{% static '/bookshelf/js/main.js' %}"></script>
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
           integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
           crossorigin="anonymous">
   </script>
-  <script src="{% static '/bookshelf/js/jquery.min.js' %}"></script>
   <script src="{% static '/bookshelf/js/fontawesome-icons.js' %}" crossorigin="anonymous"></script>
+  {% block script_end %} {% endblock %}
 
 </body>
 
 </html>
 
 <!--todo = не работают переходы в хэдере в выпадающем меню для nav-mobile-->
+<!--todo = на шаблонах приложения user не срабатывают фокусы на тэг <а>-->
+<!--todo = на шаблонах приложения user в алерте при width менее 500 пропадает крестик, а также не срабатывает фокус на него-->

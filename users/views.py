@@ -7,7 +7,7 @@ from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 
 
 class Login(View):
-    title = 'Bookshelf - Авторизация'
+    title = '- Авторизация'
 
     def get(self, request):
         form = UserLoginForm()
@@ -29,7 +29,7 @@ class Login(View):
 
 
 class Registration(View):
-    title = 'Bookshelf - Регистрация'
+    title = '- Регистрация'
 
     def get(self, request):
         form = UserRegistrationForm()
@@ -51,7 +51,7 @@ class Profile(View):
     def get(self, request):
         # для передачи данных в профиль заполняем instance
         form = UserProfileForm(instance=request.user)
-        title = 'Bookshelf - Профиль'
+        title = '- Профиль'
         return render(request, 'users/profile.html', context={'form': form, 'title': title})
 
     def post(self, request):
