@@ -1,0 +1,1 @@
+[{"model": "books.status", "pk": 1, "fields": {"name": "Закончена"}}, {"model": "books.status", "pk": 2, "fields": {"name": "Читаю"}}, {"model": "books.status", "pk": 3, "fields": {"name": "Лист ожидания"}}, {"model": "books.status", "pk": 4, "fields": {"name": "Интересно"}}, {"model": "books.status", "pk": 5, "fields": {"name": "Брошена"}}]

@@ -20,6 +20,7 @@
     .header .header__bottom-container .header-bottom__nav .header-bottom__nav-list {
       width: 100%;
       justify-content: space-between;
+      align-items: center;
     }
     .header .header__bottom-container .header-bottom__nav .header-bottom__nav-list .header-bottom__item-link {
       font-family: 'TT Firs Neue';
@@ -173,6 +174,14 @@
     .footer .footer__list-item:first-child {
       margin-right: 0;
     }
+    .container__book-list {
+      padding-bottom: 30px;
+    }
+
+    .book-list-right__item {
+      flex: 0 0 33%;
+      max-width: 33%;
+    }
   }
   
   @media (max-width: 600px) {
@@ -231,6 +240,14 @@
       margin-right: 10px;
       font-size: 14px;
       line-height: 25px;
+    }
+    .container__book-list {
+      padding-bottom: 30px;
+    }
+
+    .book-list-right__item {
+      flex: 0 0 50%;
+      max-width: 50%;
     }
   }
     

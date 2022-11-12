@@ -19,6 +19,9 @@
   .header .header__nav .header__nav-list {
     margin-right: 131px;
   }
+  .container__book-list {
+    padding-bottom: 30px;
+  }
 }
 
   @media (max-width: 945px) {
@@ -82,6 +85,11 @@
 
     .book__content-review {
       grid-row: 4/4
+    }
+
+    .book-list-right__item {
+      flex: 0 0 33%;
+      max-width: 33%;
     }
   }
 

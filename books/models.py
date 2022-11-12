@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
+from users.models import User
 
 
 class Genre(models.Model):
@@ -14,14 +15,18 @@ class Genre(models.Model):
 
 
 class Author(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Автор')
+    first_name = models.CharField(max_length=100, default=None, null=True, verbose_name='Имя')
+    last_name = models.CharField(max_length=100, default=None, null=True, verbose_name='Фамилия')
+    birthday = models.DateField(blank=True, default=None, null=True, verbose_name='Дата рождения')
+    death = models.DateField(blank=True, default=None, null=True, verbose_name='Дата смерти')
+    country = models.CharField(max_length=100, blank=True, default=None, null=True, verbose_name='Страна')
 
     class Meta:
         verbose_name = 'Автор'
         verbose_name_plural = 'Авторы'
 
     def __str__(self):
-        return self.name
+        return f'{self.last_name} {self.first_name}'
 
 
 class Cycle(models.Model):
@@ -82,8 +87,22 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
-#
-#
+
+
+class Basket(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    quantity = models.PositiveSmallIntegerField(default=0)
+    created_timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Корзина'
+        verbose_name_plural = 'Корзины'
+
+    def __str__(self):
+        return f'Корзина для {self.user.email} | Книга: {self.book.title}'
+
+
 # class Review(models.Model):
 #     user_name = models.CharField(max_length=30)
 #     text = models.TextField(max_length=3000)

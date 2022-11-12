@@ -9,7 +9,9 @@ class GenreAdmin(admin.ModelAdmin):
 
 @admin.register(Author)
 class AuthorAdmin(admin.ModelAdmin):
-    list_display = ['name']
+    list_display = ['last_name', 'first_name', 'country', 'birthday', 'death']
+    list_filter = ['country']
+    search_fields = ['last_name']
 
 
 @admin.register(Cycle)

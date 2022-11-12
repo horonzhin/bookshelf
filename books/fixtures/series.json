@@ -1,0 +1,1 @@
+[{"model": "books.series", "pk": 1, "fields": {"name": "Первый закон"}}, {"model": "books.series", "pk": 2, "fields": {"name": "Властелин колец"}}]

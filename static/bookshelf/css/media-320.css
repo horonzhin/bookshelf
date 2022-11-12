@@ -321,4 +321,9 @@
             height: 300px;
             background-image: url(/static/bookshelf/img/projects-bg-card7.webp)
         }
+
+        .book-list-right__item {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
 	}

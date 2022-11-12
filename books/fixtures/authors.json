@@ -1,0 +1,1 @@
+[{"model": "books.author", "pk": 2, "fields": {"first_name": "Джо", "last_name": "Аберкромби", "birthday": "1974-12-31", "death": null, "country": "Великобритания"}}, {"model": "books.author", "pk": 3, "fields": {"first_name": "Джон", "last_name": "Толкин", "birthday": "1892-01-03", "death": "1973-09-02", "country": "Великобритания"}}]

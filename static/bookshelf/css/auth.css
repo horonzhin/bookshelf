@@ -112,10 +112,12 @@ a {
 }
 
 .container-auth {
+    font-family: 'TT Firs Neue';
     width: 100%;
     padding-right: 0.75rem;
     padding-left: 0.75rem;
-    padding-bottom: 50px;
+    padding-top: 30px;
+    padding-bottom: 30px;
     margin-right: auto;
     margin-left: auto;
 }
@@ -478,8 +480,6 @@ fieldset:disabled a.btn-auth {
 }
 
 .container__profile {
-    margin-top: 3rem;
-    margin-bottom: 3rem;
     display: block;
 }
 
@@ -723,6 +723,7 @@ a.badge-secondary:focus, a.badge-secondary.focus {
 }
 
 .btn-success {
+    margin-bottom: 10px;
     margin-top: 10px;
     color: var(--white);
     background-color: #28a745;
