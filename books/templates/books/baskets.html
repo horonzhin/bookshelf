@@ -1,22 +1,28 @@
-<h3 class="profile-right__title">
+{% if baskets  %}
+    <h3 class="profile-right__title">
       Корзина <span class="badge badge-secondary badge-pill">3</span>
     </h3>
-    <div class="card card-bg">
+    {% for basket in baskets %}
+        <div class="card card-bg card-basket">
       <div class="card-body">
-        <h4 class="card-title">Product name</h4>
-        <p class="card-text">Product description</p>
+        <h4 class="card-title">{{ basket.book.title }}</h4>
+        {% for author in basket.book.author.all %}
+            <p class="card-text">{{ author.last_name }} {{ author.first_name }}</p>
+        {% endfor %}
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item">
           <div class="list-group-item__price">
-            <input name="basketID" type="number" class="form-control form-control__badge" value="1" min="0">
+            <input name="basketID" type="number" class="form-control form-control__badge"
+                   value="{{ basket.quantity }}" min="0">
             <p class="badge-price">2 390 руб.</p>
-            <a href="#"><i class="fas fa-trash"></i></a>
+            <a href="{% url 'books:basket_remove' basket.id %}"><i class="fas fa-trash"></i></a>
           </div>
         </li>
       </ul>
     </div>
-    <div class="card">
+    {% endfor %}
+    <div class="card card-basket">
       <div class="card-footer card-footer-profile">
         <p class="float-left">Итого</p>
         <h4 class="float-right">2 390 руб.</h4>
@@ -25,3 +31,8 @@
     <a class="btn-auth btn-success float-right" href="../orders/order-create.html">
       Оформить заказ
     </a>
+{% else %}
+    <h3 class="profile-right__title">
+      Корзина пуста
+    </h3>
+{% endif %}

@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.views import View
 from users.models import User
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
+from books.models import Basket
 
 
 class Login(View):
@@ -51,11 +52,16 @@ class Profile(View):
     def get(self, request):
         # для передачи данных в профиль заполняем instance
         form = UserProfileForm(instance=request.user)
-        title = '- Профиль'
-        return render(request, 'users/profile.html', context={'form': form, 'title': title})
+        context = {
+            'title': '- Профиль',
+            'form': form,
+            # покажем user только те книги которые он добавил себе. Если указать objects.all() будут все книги всех user
+            'baskets': Basket.objects.filter(user=request.user),
+        }
+        return render(request, 'users/profile.html', context)
 
     def post(self, request):
-        # чтобы перезаписать, а не создать новый добавляем instance=request.user
+        # чтоб  ы перезаписать, а не создать новый добавляем instance=request.user
         # а для загрузки картинок добавить files=request.FILES
         # (не забыть в шаблоне в тэг <form> добавить enctype="multipart/form-data)"
         form = UserProfileForm(instance=request.user, data=request.POST, files=request.FILES)

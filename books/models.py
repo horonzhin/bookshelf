@@ -100,7 +100,7 @@ class Basket(models.Model):
         verbose_name_plural = 'Корзины'
 
     def __str__(self):
-        return f'Корзина для {self.user.email} | Книга: {self.book.title}'
+        return f'Корзина для {self.user.username} | Книга: {self.book.title}'
 
 
 # class Review(models.Model):
