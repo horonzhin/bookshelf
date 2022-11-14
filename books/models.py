@@ -79,6 +79,7 @@ class Book(models.Model):
     first_reading = models.DateField(blank=True, default=None, null=True, verbose_name='Первое прочтение')
     second_reading = models.DateField(blank=True, default=None, null=True, verbose_name='Второе прочтение')
     third_reading = models.DateField(blank=True, default=None, null=True, verbose_name='Третье прочтение')
+    price = models.DecimalField(blank=True, default=None, null=True, max_digits=8, decimal_places=2)
 
     class Meta:
         ordering = ['title']
@@ -89,11 +90,27 @@ class Book(models.Model):
         return self.title
 
 
+# создадим свои методы в queryset корзины для того чтобы их вызывать в шаблонах,
+# т.к. обычные методы queryset нельзя вызывать в шаблонах.
+# Для подсчета общего кол-ва книг и общей суммы книг в корзине.
+class BasketQuerySet(models.QuerySet):
+    def total_sum(self):
+        return sum(basket.sum() for basket in self)
+
+    def total_quantity(self):
+        return sum(basket.quantity for basket in self)
+
+
 class Basket(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     quantity = models.PositiveSmallIntegerField(default=0)
     created_timestamp = models.DateTimeField(auto_now_add=True)
+    # когда мы обращаемся к Basket.objects.all() будем дополнять его нашим queryset с нашими методами
+    objects = BasketQuerySet.as_manager()
+
+    def sum(self):
+        return self.book.price * self.quantity
 
     class Meta:
         verbose_name = 'Корзина'

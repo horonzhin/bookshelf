@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, HttpResponseRedirect
 from django.views import View
@@ -49,6 +50,9 @@ class BookDetail(TemplateView):
 #     template_name = 'books/book_detail.html'
 #     context_object_name = 'book'
 
+
+# декоратор доступа, чтобы представление не срабатывало если user не авторизован
+@login_required
 def basket_add(request, book_id):
     book = Book.objects.get(id=book_id)
     # возьмем все корзины user с определенной книгой.
@@ -66,6 +70,8 @@ def basket_add(request, book_id):
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
+# декоратор доступа, чтобы представление не срабатывало если user не авторизован
+@login_required
 def basket_remove(request, basket_id):
     basket = Basket.objects.get(id=basket_id)
     basket.delete()

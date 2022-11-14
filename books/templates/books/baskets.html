@@ -1,6 +1,6 @@
 {% if baskets  %}
     <h3 class="profile-right__title">
-      Корзина <span class="badge badge-secondary badge-pill">3</span>
+      Корзина <span class="badge badge-secondary badge-pill">{{ baskets.total_quantity }}</span>
     </h3>
     {% for basket in baskets %}
         <div class="card card-bg card-basket">
@@ -15,7 +15,7 @@
           <div class="list-group-item__price">
             <input name="basketID" type="number" class="form-control form-control__badge"
                    value="{{ basket.quantity }}" min="0">
-            <p class="badge-price">2 390 руб.</p>
+            <p class="badge-price">{{ basket.sum }} руб.</p>
             <a href="{% url 'books:basket_remove' basket.id %}"><i class="fas fa-trash"></i></a>
           </div>
         </li>
@@ -25,7 +25,7 @@
     <div class="card card-basket">
       <div class="card-footer card-footer-profile">
         <p class="float-left">Итого</p>
-        <h4 class="float-right">2 390 руб.</h4>
+        <h4 class="float-right">{{ baskets.total_sum }} руб.</h4>
       </div>
     </div>
     <a class="btn-auth btn-success float-right" href="../orders/order-create.html">

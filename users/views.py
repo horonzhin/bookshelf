@@ -1,5 +1,7 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.contrib import auth, messages
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.urls import reverse
 from django.views import View
 from users.models import User
@@ -47,6 +49,8 @@ class Registration(View):
         return render(request, 'users/register.html', context={'form': form, 'title': self.title})
 
 
+# декоратор доступа, чтобы представление не срабатывало если user не авторизован
+@method_decorator(login_required, name='dispatch')
 class Profile(View):
 
     def get(self, request):
@@ -61,7 +65,7 @@ class Profile(View):
         return render(request, 'users/profile.html', context)
 
     def post(self, request):
-        # чтоб  ы перезаписать, а не создать новый добавляем instance=request.user
+        # чтобы перезаписать, а не создать новый добавляем instance=request.user
         # а для загрузки картинок добавить files=request.FILES
         # (не забыть в шаблоне в тэг <form> добавить enctype="multipart/form-data)"
         form = UserProfileForm(instance=request.user, data=request.POST, files=request.FILES)
