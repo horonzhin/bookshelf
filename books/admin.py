@@ -1,5 +1,10 @@
 from django.contrib import admin
-from books.models import Status, Genre, Author, Cycle, Series, Book
+from books.models import Status, Genre, Author, Cycle, Series, Book, BookCategory
+
+
+@admin.register(BookCategory)
+class Category(admin.ModelAdmin):
+    list_display = ['name']
 
 
 @admin.register(Genre)
@@ -42,6 +47,9 @@ class BookAdmin(admin.ModelAdmin):
         }),
         ('Блок читателя', {
             'fields': ('status', 'rating', 'first_reading', 'second_reading', 'third_reading')
+        }),
+        ('Категории', {
+            'fields': ('category',)
         })
     )
 

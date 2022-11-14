@@ -18,13 +18,17 @@
     <div class="col-lg-3 book-list-left">
       <h1 class="my-4 book-list__title">Книжная полка</h1>
       <div class="list-group book-list-left__group">
-        <a href="#" class="list-group-item book-list__link">Любимые</a>
-        <a href="#" class="list-group-item book-list__link">Жанры</a>
-        <a href="#" class="list-group-item book-list__link">Рейтинг</a>
-        <a href="#" class="list-group-item book-list__link">Статус</a>
-        <a href="#" class="list-group-item book-list__link">Цели</a>
-        <a href="#" class="list-group-item book-list__link">Рецензии</a>
-        <a href="#" class="list-group-item book-list__link">Достижения</a>
+        {% for category in categories %}
+          <a href="{% url 'books:category' category.id %}" class="list-group-item book-list__link">
+            {{ category.name }}
+          </a>
+        {% endfor %}
+        <a href="#" class="list-group-item book-list__link disabled">Жанры</a>
+        <a href="#" class="list-group-item book-list__link disabled">Рейтинг</a>
+        <a href="#" class="list-group-item book-list__link disabled">Статус</a>
+        <a href="#" class="list-group-item book-list__link disabled">Цели</a>
+        <a href="#" class="list-group-item book-list__link disabled">Рецензии</a>
+        <a href="#" class="list-group-item book-list__link disabled">Достижения</a>
       </div>
     </div>
 
@@ -58,7 +62,7 @@
       </div>
 
       <div class="row book-list-right__list">
-        {% for book in books %}
+        {% for book in books_list %}
         <div class="col-lg-3 col-md-6 mb-4 book-list-right__item">
           <div class="card h-100">
             <a href="#" class="book-list__link">
@@ -83,19 +87,32 @@
         {% endfor %}
       </div>
 
-      <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-          <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Назад</a>
-          </li>
-          <li class="page-item"><a class="page-link book-list__page" href="#">1</a></li>
-          <li class="page-item"><a class="page-link book-list__page" href="#">2</a></li>
-          <li class="page-item"><a class="page-link book-list__page" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link book-list__page" href="#">Вперед</a>
-          </li>
-        </ul>
-      </nav>
+      {% if is_paginated %}
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
+              <a class="page-link book-list__page"
+                 href="{% if page_obj.has_previous %} {% url 'books:paginator' page_obj.previous_page_number %} {% else %} # {% endif %}"
+                 tabindex="-1" aria-disabled="true">
+                Назад
+              </a>
+            </li>
+            {% for page in page_obj.paginator.page_range %}
+              <li class="page-item">
+                <a class="page-link book-list__page" href="{% url 'books:paginator' page %}">
+                  {{ page }}
+                </a>
+              </li>
+            {% endfor %}
+            <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
+              <a class="page-link book-list__page"
+                 href="{% if page_obj.has_next %} {% url 'books:paginator' page_obj.next_page_number %} {% else %} # {% endif %}">
+                Вперед
+              </a>
+            </li>
+          </ul>
+        </nav>
+      {% endif %}
 
   </div>
 
@@ -114,5 +131,6 @@
 {% endblock %}
 
 <!--todo = настроить hover и disabled-->
-<!--todo = сделать так, чтобы на странице отображались книги привязанные к user, а если не авторизован, то ничего-->
 <!--todo = картинки на слайдер-->
+<!--todo = отображать книги привязанные к user, а если не авторизован, то ничего-->
+<!--todo = вывести в категории фильтрации с выпадающими полями (Жанр, Рейтинг, Статус) и отдельные для них страницы-->

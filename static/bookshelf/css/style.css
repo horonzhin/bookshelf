@@ -171,6 +171,12 @@
     outline: none;
   }
 
+  a.disabled {
+    pointer-events: none;
+    cursor: default;
+    color: #999;
+  }
+
   ul li {
     list-style: none;
   }

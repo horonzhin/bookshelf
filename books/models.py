@@ -3,6 +3,18 @@ from django.db import models
 from users.models import User
 
 
+class BookCategory(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+
+    def __str__(self):
+        return self.name
+
+
 class Genre(models.Model):
     name = models.CharField(max_length=100, verbose_name='Жанр')
 
@@ -80,6 +92,8 @@ class Book(models.Model):
     second_reading = models.DateField(blank=True, default=None, null=True, verbose_name='Второе прочтение')
     third_reading = models.DateField(blank=True, default=None, null=True, verbose_name='Третье прочтение')
     price = models.DecimalField(blank=True, default=None, null=True, max_digits=8, decimal_places=2)
+    category = models.ForeignKey(BookCategory, blank=True, default=None, null=True, on_delete=models.CASCADE,
+                                 related_name='book', verbose_name='Категория')
 
     class Meta:
         ordering = ['title']

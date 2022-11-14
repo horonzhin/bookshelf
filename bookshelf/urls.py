@@ -21,7 +21,7 @@ from books import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.Index.as_view(), name='index'),
+    path('', views.IndexView.as_view(), name='index'),
     path('books/', include('books.urls', namespace='books')),
     path('users/', include('users.urls', namespace='users')),
     path('contacts/', views.Contacts.as_view(), name='contacts'),
