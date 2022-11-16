@@ -21,7 +21,7 @@ class BookListView(ListView):
         category_id = self.kwargs.get('category_id')
         return queryset.filter(category_id=category_id) if category_id else queryset
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Книжная полка'
         context['categories'] = BookCategory.objects.all()
@@ -40,7 +40,7 @@ class AuthorBooksListView(ListView):
         category_id = self.kwargs.get('category_id')
         return queryset.filter(category_id=category_id) if category_id else queryset
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Книги автора'
         context['categories'] = BookCategory.objects.all()
@@ -92,6 +92,10 @@ class IndexView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Bookshelf'
+        # показываем последние три добавленные книги
+        context['books'] = Book.objects.all().order_by('-id')[:3]
+        # показываем последние две добавленные книги в избранное (id избранного = 1)
+        context['favourite'] = Book.objects.all().order_by('category_id')[:2]
         return context
 
 

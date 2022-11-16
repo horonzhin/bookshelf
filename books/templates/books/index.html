@@ -9,7 +9,7 @@
             <div class="big-tag">#последняя публикация</div>
             <div class="item-descr-container">
               <p class="hero__content-item-descr">Дмитрий&nbsp;Хоронжин</p>
-              <h1 class="hero__content-item-title title-h1">Потерянный</h1>
+              <h1 class="hero__content-item-title title-h1">Расщепление</h1>
               <button class="hero__content-item-btn primary-btn btn">Читать</button>
             </div>
           </div>
@@ -53,51 +53,28 @@
         <h2 class="projects__title title-h2">Книжная полка читателя</h2>
         <div class="projects__cards-container grid">
           <div class="small-cards-container grid">
+            {% for book in books %}
             <a href="#" class="projects__cards-item projects__cards-item_1">
               <div class="projects__cards-item-img projects__cards-item-img_1">
+                <img class="books__cards-item-img" src="{{ book.cover.url }}">
                 <div class="small-tag">#прочел</div>
               </div>
-              <p class="projects__cards-item-descr"><b>Title book</b></p>
-              <p class="projects__cards-item-descr">Author name</p>
-              <p class="projects__cards-item-descr-tablet"><b>Title book</b></p>
-              <p class="projects__cards-item-descr-tablet">Author name</p>
+              <p class="projects__cards-item-descr"><b>{{ book.title }}</b></p>
+              {% for author in book.author.all %}
+                <p class="projects__cards-item-descr">{{ author.last_name }} {{ author.first_name }}</p>
+              {% endfor %}
+              <p class="projects__cards-item-descr-tablet"><b>{{ book.title }}</b></p>
+              {% for author in book.author.all %}
+                <p class="projects__cards-item-descr-tablet">{{ author.last_name }} {{ author.first_name }}</p>
+              {% endfor %}
               <span class="projects__cards-item-date flex">
                 <svg width="12" height="14" viewbox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M10.6666 1.74992H10.0833V0.583252H8.91663V1.74992H3.08329V0.583252H1.91663V1.74992H1.33329C0.691626 1.74992 0.166626 2.27492 0.166626 2.91659V12.2499C0.166626 12.8916 0.691626 13.4166 1.33329 13.4166H10.6666C11.3083 13.4166 11.8333 12.8916 11.8333 12.2499V2.91659C11.8333 2.27492 11.3083 1.74992 10.6666 1.74992ZM10.6666 12.2499H1.33329V4.66658H10.6666V12.2499Z" fill="#999999"/>
                 </svg>
-                Data last reading
+                {{ book.first_reading }}
               </span>
             </a>
-            <a href="#" class="projects__cards-item projects__cards-item_2">
-              <div class="projects__cards-item-img projects__cards-item-img_2">
-                <div class="small-tag">#прочел</div>
-              </div>
-              <p class="projects__cards-item-descr"><b>Title book</b></p>
-              <p class="projects__cards-item-descr">Author name</p>
-              <p class="projects__cards-item-descr-tablet"><b>Title book</b></p>
-              <p class="projects__cards-item-descr-tablet">Author name</p>
-              <span class="projects__cards-item-date flex">
-                <svg width="12" height="14" viewbox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M10.6666 1.74992H10.0833V0.583252H8.91663V1.74992H3.08329V0.583252H1.91663V1.74992H1.33329C0.691626 1.74992 0.166626 2.27492 0.166626 2.91659V12.2499C0.166626 12.8916 0.691626 13.4166 1.33329 13.4166H10.6666C11.3083 13.4166 11.8333 12.8916 11.8333 12.2499V2.91659C11.8333 2.27492 11.3083 1.74992 10.6666 1.74992ZM10.6666 12.2499H1.33329V4.66658H10.6666V12.2499Z" fill="#999999"/>
-                </svg>
-                Data last reading
-              </span>
-            </a>
-            <a href="#" class="projects__cards-item projects__cards-item_3">
-              <div class="projects__cards-item-img projects__cards-item-img_3">
-                <div class="small-tag">#прочел</div>
-              </div>
-              <p class="projects__cards-item-descr"><b>Title book</b></p>
-              <p class="projects__cards-item-descr">Author name</p>
-              <p class="projects__cards-item-descr-tablet"><b>Title book</b></p>
-              <p class="projects__cards-item-descr-tablet">Author name</p>
-              <span class="projects__cards-item-date flex">
-                <svg width="12" height="14" viewbox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M10.6666 1.74992H10.0833V0.583252H8.91663V1.74992H3.08329V0.583252H1.91663V1.74992H1.33329C0.691626 1.74992 0.166626 2.27492 0.166626 2.91659V12.2499C0.166626 12.8916 0.691626 13.4166 1.33329 13.4166H10.6666C11.3083 13.4166 11.8333 12.8916 11.8333 12.2499V2.91659C11.8333 2.27492 11.3083 1.74992 10.6666 1.74992ZM10.6666 12.2499H1.33329V4.66658H10.6666V12.2499Z" fill="#999999"/>
-                </svg>
-                Data last reading
-              </span>
-            </a>
+            {% endfor %}
           </div>
           <div class="projects__cards-item projects__cards-item_4 flex">
             <div class="small-tag">#достижение</div>
@@ -113,47 +90,41 @@
             <button class="projects__cards-item-btn btn secondary-btn">К достижениям</button>
           </div>
           <div class="projects__cards-item projects__cards-item_5 flex">
-            <div class="small-tag">#рецензии</div>
+            <div class="small-tag">#цели</div>
             <span class="projects__cards-item-date flex">
               <svg width="12" height="14" viewbox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M10.6666 1.74992H10.0833V0.583252H8.91663V1.74992H3.08329V0.583252H1.91663V1.74992H1.33329C0.691626 1.74992 0.166626 2.27492 0.166626 2.91659V12.2499C0.166626 12.8916 0.691626 13.4166 1.33329 13.4166H10.6666C11.3083 13.4166 11.8333 12.8916 11.8333 12.2499V2.91659C11.8333 2.27492 11.3083 1.74992 10.6666 1.74992ZM10.6666 12.2499H1.33329V4.66658H10.6666V12.2499Z" fill="#ffffff"/>
               </svg>
               Data review
             </span>
-            <strong class="projects__cards-item-heading">Title review</strong>
-            <p class="projects__cards-item-descr"><i>Title book</i></p>
-            <p class="projects__cards-item-descr">Descr review</p>
-            <p class="projects__cards-item-descr-tablet">Descr review</p>
-            <button class="projects__cards-item-btn btn secondary-btn">К рецензиям</button>
+            <strong class="projects__cards-item-heading">Title purpose</strong>
+            <p class="projects__cards-item-descr"><i>Last completed purpose</i></p>
+            <p class="projects__cards-item-descr">Descr purpose</p>
+            <p class="projects__cards-item-descr-tablet">Descr purpose</p>
+            <button class="projects__cards-item-btn btn secondary-btn">К целям</button>
           </div>
-          <a href="#" class="projects__cards-item projects__cards-item_6">
-            <div class="projects__cards-item-img projects__cards-item-img_6">
-              <div class="small-tag">#любимые</div>
-            </div>
-            <p class="projects__cards-item-descr"><b>Title book</b></p>
-            <p class="projects__cards-item-descr">Author name</p>
-            <p class="projects__cards-item-descr-tablet">Author name</p>
-            <span class="projects__cards-item-date flex">
-              <svg width="12" height="14" viewbox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.6666 1.74992H10.0833V0.583252H8.91663V1.74992H3.08329V0.583252H1.91663V1.74992H1.33329C0.691626 1.74992 0.166626 2.27492 0.166626 2.91659V12.2499C0.166626 12.8916 0.691626 13.4166 1.33329 13.4166H10.6666C11.3083 13.4166 11.8333 12.8916 11.8333 12.2499V2.91659C11.8333 2.27492 11.3083 1.74992 10.6666 1.74992ZM10.6666 12.2499H1.33329V4.66658H10.6666V12.2499Z" fill="#999999"/>
-              </svg>
-              Data last reading
-            </span>
-          </a>
-          <a href="#" class="projects__cards-item projects__cards-item_7">
-            <div class="projects__cards-item-img projects__cards-item-img_7">
-              <div class="small-tag">#любимые</div>
-            </div>
-            <p class="projects__cards-item-descr"><b>Title book</b></p>
-            <p class="projects__cards-item-descr">Author name</p>
-            <p class="projects__cards-item-descr-tablet">Author name</p>
-            <span class="projects__cards-item-date flex">
-              <svg width="12" height="14" viewbox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.6666 1.74992H10.0833V0.583252H8.91663V1.74992H3.08329V0.583252H1.91663V1.74992H1.33329C0.691626 1.74992 0.166626 2.27492 0.166626 2.91659V12.2499C0.166626 12.8916 0.691626 13.4166 1.33329 13.4166H10.6666C11.3083 13.4166 11.8333 12.8916 11.8333 12.2499V2.91659C11.8333 2.27492 11.3083 1.74992 10.6666 1.74992ZM10.6666 12.2499H1.33329V4.66658H10.6666V12.2499Z" fill="#999999"/>
-              </svg>
-              Data last reading
-            </span>
-          </a>
+          {% for book in favourite %}
+            <a href="#" class="projects__cards-item projects__cards-item_6">
+              <div class="projects__cards-item-img projects__cards-item-img_6">
+                <img class="books__cards-item-img" src="{{ book.cover.url }}">
+                <div class="small-tag">#любимые</div>
+              </div>
+              <p class="projects__cards-item-descr"><b>{{ book.title }}</b></p>
+              {% for author in book.author.all %}
+                <p class="projects__cards-item-descr">{{ author.last_name }} {{ author.first_name }}</p>
+              {% endfor %}
+              <p class="projects__cards-item-descr-tablet"><b>{{ book.title }}</b></p>
+              {% for author in book.author.all %}
+                <p class="projects__cards-item-descr-tablet">{{ author.last_name }} {{ author.first_name }}</p>
+              {% endfor %}
+              <span class="projects__cards-item-date flex">
+                <svg width="12" height="14" viewbox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M10.6666 1.74992H10.0833V0.583252H8.91663V1.74992H3.08329V0.583252H1.91663V1.74992H1.33329C0.691626 1.74992 0.166626 2.27492 0.166626 2.91659V12.2499C0.166626 12.8916 0.691626 13.4166 1.33329 13.4166H10.6666C11.3083 13.4166 11.8333 12.8916 11.8333 12.2499V2.91659C11.8333 2.27492 11.3083 1.74992 10.6666 1.74992ZM10.6666 12.2499H1.33329V4.66658H10.6666V12.2499Z" fill="#999999"/>
+                </svg>
+                Data last reading
+              </span>
+            </a>
+          {% endfor %}
         </div>
       </div>
     </section>
