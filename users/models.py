@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.mail import send_mail
+from django.urls import reverse
+from django.conf import settings
+from django.utils.timezone import now
 
 
 # для того чтобы расширить имеющуюся модель user, а не создавать все поля заново, наследуемся от AbstractUser
@@ -23,13 +26,24 @@ class EmailVerification(models.Model):
 
     # метод отправки email с подтверждением почты
     def send_verification_email(self):
+        link = reverse('users:email_verification', kwargs={'email': self.user.email, 'code': self.code})
+        verification_link = f'{settings.DOMAIN_NAME}{link}'
+        subject = f'Подтверждение учетной записи для {self.user.username}'
+        message = 'Для подтверждения учетной записи для {} перейдите по ссылке: {}'.format(
+            self.user.email,
+            verification_link
+        )
         send_mail(
-            'Subject here',
-            'Here is the message.',
-            'from@example.com',
-            [self.user.email],
+            subject=subject,
+            message=message,
+            from_email='from@example.com',
+            recipient_list=[self.user.email],
             fail_silently=False,
         )
+
+    # метод для проверки срока годности ссылки
+    def is_expired(self):
+        return True if now() >= self.expiration else False
 
     class Meta:
         verbose_name = 'Подтверждение почты'

@@ -4,9 +4,9 @@ from django.contrib import auth
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse, reverse_lazy
 from django.views import View
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, TemplateView
 
-from users.models import User
+from users.models import User, EmailVerification
 from users.forms import UserLoginForm, UserRegistrationForm, UserProfileForm
 from books.models import Basket
 from common.views import TitleMixin
@@ -40,6 +40,25 @@ class UserProfileView(TitleMixin, UpdateView):
         context = super(UserProfileView, self).get_context_data()
         context['baskets'] = Basket.objects.filter(user=self.object)
         return context
+
+
+class EmailVerificationView(TitleMixin, TemplateView):
+    title = 'Подтверждение электронной почты'
+    template_name = 'users/email_verification.html'
+
+    # сверяем полученный code с тем что в бд
+    def get(self, request, *args, **kwargs):
+        code = kwargs['code']
+        user = User.objects.get(email=kwargs['email'])
+        # не берем get(), т.к. если данного объекта не будет выскочит ошибка в шаблоне.
+        # Используем filter, если объекта не будет вернется пустой список без ошибок
+        email_verifications = EmailVerification.objects.filter(user=user, code=code)
+        if email_verifications.exists() and not email_verifications.first().is_expired():
+            user.is_verified_email = True
+            user.save()
+            return super(EmailVerificationView, self).get(request, *args, **kwargs)
+        else:
+            return HttpResponseRedirect(reverse('index'))
 
 
 # декоратор доступа, чтобы представление не срабатывало если user не авторизован

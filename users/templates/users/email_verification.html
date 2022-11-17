@@ -1,0 +1,22 @@
+{% extends 'books/base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static '/bookshelf/css/auth.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container-auth container-email">
+  <div class="card shadow-lg">
+    <div class="card-header">
+      <h3 class="text-center font-weight-light">Поздравляем</h3>
+    </div>
+    <div class="card-body text-center">
+      <h4>Ваша учетная запись успешно подтверждена!</h4>
+    </div>
+    <div class="card-footer text-center">
+      <div class="small"><a href="{% url 'users:login' %}">Продолжить</a></div>
+    </div>
+  </div>
+</div>
+{% endblock %}
