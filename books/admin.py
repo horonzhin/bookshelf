@@ -1,5 +1,7 @@
 from django.contrib import admin
-from books.models import Status, Genre, Author, Cycle, Series, Book, BookCategory, Basket
+
+from books.models import (Author, Basket, Book, BookCategory, Cycle, Genre,
+                          Series, Status)
 
 
 @admin.register(BookCategory)
@@ -59,4 +61,3 @@ class BasketAdmin(admin.TabularInline):
     fields = ('book', 'quantity', 'created_timestamp')
     readonly_fields = ('created_timestamp',)
     extra = 0
-

@@ -16,4 +16,3 @@ class LoggerMiddleware:
             file.write(f'{time} | {ip} | {method} | {url}\n')
 
         return self.get_response(request)
-

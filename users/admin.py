@@ -1,6 +1,7 @@
 from django.contrib import admin
-from users.models import User, EmailVerification
+
 from books.admin import BasketAdmin
+from users.models import EmailVerification, User
 
 
 @admin.register(User)
@@ -15,4 +16,3 @@ class EmailVerificationAdmin(admin.ModelAdmin):
     list_display = ['code', 'user', 'expiration']
     fields = ['code', 'user', 'expiration', 'created']
     readonly_fields = ['created']
-

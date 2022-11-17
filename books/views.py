@@ -1,10 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from django.shortcuts import render, HttpResponseRedirect
-from django.views import View
-from django.views.generic import TemplateView, ListView
-from books.models import Book, Basket, BookCategory
-from users.models import User
+from django.shortcuts import HttpResponseRedirect
+from django.views.generic import ListView, TemplateView
+
+from books.models import Basket, Book, BookCategory, Author
 from common.views import TitleMixin
 
 
@@ -14,7 +12,7 @@ class BookListView(TitleMixin, ListView):
     # список книг полученных из базы будет доступен в шаблоне через переменную object_list, чтобы придать ему
     # более понятное название, нужно добавить атрибут context_object_name и дать ему более подходящее название.
     context_object_name = 'books_list'
-    paginate_by = 4
+    paginate_by = 8
     title = 'Книжная полка'
 
     # метод для фильтрации по категориям
@@ -33,7 +31,7 @@ class AuthorBooksListView(TitleMixin, ListView):
     model = Book
     template_name = 'books/author-books_list.html'
     context_object_name = 'author_books_list'
-    paginate_by = 4
+    paginate_by = 8
     title = 'Книги автора'
 
     # метод для фильтрации по категориям
@@ -44,6 +42,8 @@ class AuthorBooksListView(TitleMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
+        # todo = сортирую авторов по id (я первый), но лучше сделать сортировку по фамилии.
+        context['author_books'] = Book.objects.all().filter(author=1)
         context['categories'] = BookCategory.objects.all()
         return context
 

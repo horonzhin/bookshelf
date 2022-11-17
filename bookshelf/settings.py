@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-from config import DB_USER, DB_PASSWORD
+
+from config import DB_PASSWORD, DB_USER
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -67,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'books.context_processors.baskets'
             ],
         },
     },
@@ -147,6 +149,8 @@ LOGOUT_REDIRECT_URL = '/'
 
 # Sending emails
 
-if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
+EMAIL_HOST = 'smtp.yandex.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'info-bookshelf-pass@yandex.ru'
+EMAIL_HOST_PASSWORD = 'info-bookshelf-password'
+EMAIL_USE_SSL = True
