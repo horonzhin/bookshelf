@@ -1,5 +1,5 @@
 from django.contrib import admin
-from books.models import Status, Genre, Author, Cycle, Series, Book, BookCategory
+from books.models import Status, Genre, Author, Cycle, Series, Book, BookCategory, Basket
 
 
 @admin.register(BookCategory)
@@ -54,8 +54,9 @@ class BookAdmin(admin.ModelAdmin):
     )
 
 
-# вариант регистрации модели без декоратора
-# class BookAdmin(admin.ModelAdmin):
-#     pass
-# admin.site.register(Book, BookAdmin) - настройки админки для модели Book храняться в классе BookAdmin
+class BasketAdmin(admin.TabularInline):
+    model = Basket
+    fields = ('book', 'quantity', 'created_timestamp')
+    readonly_fields = ('created_timestamp',)
+    extra = 0
 

@@ -137,7 +137,15 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Users - для исользования нашей модели (а не модели по умолчанию) User в приложении users
+# Users - для использования нашей модели (а не модели по умолчанию) User в приложении users
 
 AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = '/users/login/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+# Sending emails
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+

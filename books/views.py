@@ -5,15 +5,17 @@ from django.views import View
 from django.views.generic import TemplateView, ListView
 from books.models import Book, Basket, BookCategory
 from users.models import User
+from common.views import TitleMixin
 
 
-class BookListView(ListView):
+class BookListView(TitleMixin, ListView):
     model = Book
     template_name = 'books/books_list.html'
     # список книг полученных из базы будет доступен в шаблоне через переменную object_list, чтобы придать ему
     # более понятное название, нужно добавить атрибут context_object_name и дать ему более подходящее название.
     context_object_name = 'books_list'
     paginate_by = 4
+    title = 'Книжная полка'
 
     # метод для фильтрации по категориям
     def get_queryset(self):
@@ -23,16 +25,16 @@ class BookListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Книжная полка'
         context['categories'] = BookCategory.objects.all()
         return context
 
 
-class AuthorBooksListView(ListView):
+class AuthorBooksListView(TitleMixin, ListView):
     model = Book
     template_name = 'books/author-books_list.html'
     context_object_name = 'author_books_list'
     paginate_by = 4
+    title = 'Книги автора'
 
     # метод для фильтрации по категориям
     def get_queryset(self):
@@ -42,7 +44,6 @@ class AuthorBooksListView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Книги автора'
         context['categories'] = BookCategory.objects.all()
         return context
 
@@ -86,12 +87,12 @@ def basket_remove(request, basket_id):
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
-class IndexView(TemplateView):
+class IndexView(TitleMixin, TemplateView):
     template_name = 'books/index.html'
+    title = 'Bookshelf'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Bookshelf'
         # показываем последние три добавленные книги
         context['books'] = Book.objects.all().order_by('-id')[:3]
         # показываем последние две добавленные книги в избранное (id избранного = 1)
@@ -99,19 +100,11 @@ class IndexView(TemplateView):
         return context
 
 
-class About(TemplateView):
+class About(TitleMixin, TemplateView):
     template_name = 'books/about.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Об авторе'
-        return context
+    title = 'Об авторе'
 
 
-class Contacts(TemplateView):
+class Contacts(TitleMixin, TemplateView):
     template_name = 'books/contacts.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['title'] = 'Контакты'
-        return context
+    title = 'Контакты'
