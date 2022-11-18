@@ -28,9 +28,9 @@
               <h4 class="card-title book-list__title-book">
                 <a href="#" class="book-list__link">{{ book.title }}</a>
               </h4>
-              <h5>{{ book.price }} руб.</h5>
+              <h5 class="book-list__price-book">{{ book.price }} руб.</h5>
               {% for author in book.author.all %}
-                <p class="card-text">{{ author.last_name }} {{ author.first_name }}</p>
+                <p class="card-text book-list__author-book">{{ author.last_name }} {{ author.first_name }}</p>
               {% endfor %}
             </div>
             <div class="card-footer text-center">

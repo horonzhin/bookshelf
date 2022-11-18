@@ -44,7 +44,6 @@ class AuthorBooksListView(TitleMixin, ListView):
         context = super().get_context_data(**kwargs)
         # todo = сортирую авторов по id (я первый), но лучше сделать сортировку по фамилии.
         context['author_books'] = Book.objects.all().filter(author=1)
-        context['categories'] = BookCategory.objects.all()
         return context
 
 

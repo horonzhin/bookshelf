@@ -38,14 +38,16 @@ class StatusAdmin(admin.ModelAdmin):
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ['title', 'cycle', 'series', 'status', 'isbn', 'published']
+    list_display = ['title', 'cycle', 'series', 'status', 'isbn', 'published', 'price']
     # todo = добавить возможность добавления в общий вид полей с типом ManyToMany
     list_filter = ['status']
     search_fields = ['title', 'isbn']
     # todo = добавить возможность поиска по полю с типом ManyToMany
+    readonly_fields = ['user']
     fieldsets = (
         ('Сведения о книги', {
-            'fields': ('title', 'author', 'cover', 'isbn', 'published', 'genre', 'cycle', 'series', 'annotation')
+            'fields': ('title', 'author', 'cover', 'isbn', 'published', 'genre',
+                       'cycle', 'series', 'annotation', 'price')
         }),
         ('Блок читателя', {
             'fields': ('status', 'rating', 'first_reading', 'second_reading', 'third_reading')
@@ -54,6 +56,10 @@ class BookAdmin(admin.ModelAdmin):
             'fields': ('category',)
         })
     )
+
+    def save_model(self, request, obj, form, change):
+        obj.user = request.user
+        obj.save()
 
 
 class BasketAdmin(admin.TabularInline):

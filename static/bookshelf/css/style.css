@@ -1378,13 +1378,13 @@
     font-family: 'Roboto', 'TT Firs Neue', sans-serif;
   }
 
-  .book-list__title {
+  .book-list__title, .book-list__author-book, .book-list__price-book, .book-list__title-book {
+    text-align: center;
     font-family: 'TT Firs Neue';
   }
 
   .book-list__title-book {
     font-size: 20px;
-    font-family: 'TT Firs Neue';
   }
 
   .book-list__link {

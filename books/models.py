@@ -94,6 +94,7 @@ class Book(models.Model):
     price = models.DecimalField(blank=True, default=None, null=True, max_digits=8, decimal_places=2)
     category = models.ForeignKey(BookCategory, blank=True, default=None, null=True, on_delete=models.CASCADE,
                                  related_name='book', verbose_name='Категория')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='book', verbose_name='Читатель')
 
     class Meta:
         ordering = ['title']
