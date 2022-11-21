@@ -8,86 +8,140 @@
 {% block content %}
     <section class="book section">
       <div class="container book__container">
-        <h2 class="book__title title-h2">Title book</h2>
+        <h2 class="book__title title-h2">{{ book_detail.title }}</h2>
         <div class="book__content grid">
-          <div class="book__content-img"></div>
+          <img class="book__content-img" src="{{ book_detail.cover.url }}" alt="">
           <div class="book__content-about">
             <ul class="book__content-about-list">
               <li class="book__content-about-item">
-                <p>Автор:</p>
+                <p>Автор:
+                {% for author in book_detail.author.all %}
+                  <a href="#" class="book-list__link">
+                    <b>{{ author.first_name }} {{ author.last_name }}</b>
+                  </a>
+                {% endfor %}
+                </p>
               </li>
               <li class="book__content-about-item">
-                <p>ISBN:</p>
+                <p>ISBN:
+                  <b>{{ book_detail.isbn }}</b>
+                </p>
               </li>
               <li class="book__content-about-item">
-                <form>
-                  <p>
-                    Дата публикации:
-                    <input type="date" name="calendar">
-                    <input type="submit" value="Отправить">
-                  </p>
-                </form>
+                <p>Дата публикации:
+                  <b>{{ book_detail.published }}</b>
+                </p>
               </li>
               <li class="book__content-about-item">
-                <p>Жанр:</p>
+                <p>Жанр:
+                  {% for genre in book_detail.genre.all %}
+                    <a href="#" class="book-list__link">
+                      <b>{{ genre.name }}</b>
+                    </a>
+                  {% endfor %}
+                </p>
               </li>
               <li class="book__content-about-item">
-                <p>Цикл:</p>
+                <p>Цикл:
+                  <a href="#" class="book-list__link">
+                    <b>{{ book_detail.cycle.name }}</b>
+                  </a>
+                </p>
               </li>
               <li class="book__content-about-item">
-                <p>Серия:</p>
+                <p>Серия:
+                  <a href="#" class="book-list__link">
+                    <b>{{ book_detail.series.name }}</b>
+                  </a>
+                </p>
               </li>
               <li class="book__content-about-item">
-                <label for="status-select">Статус:</label>
-                <select name="status" id="status-select">
-                    <option value="">--Выберете статус--</option>
-                    <option value="reading">Читаю</option>
-                    <option value="read">Прочтена</option>
-                    <option value="wish_list">В листе ожидания</option>
-                    <option value="left">Брошена</option>
-                </select>
+                <p>Статус:
+                  <a href="#" class="book-list__link">
+                    <b>{{ book_detail.status }}</b>
+                  </a>
+                </p>
               </li>
               <li class="book__content-about-item">
-                <form>
-                  <p>
-                    Первое прочтение:
-                    <input type="date" name="calendar">
-                    <input type="submit" value="Отправить">
-                  </p>
-                </form>
+                <p>Первое прочтение:
+                  <b>{{ book_detail.first_reading }}</b>
+                </p>
               </li>
               <li class="book__content-about-item">
-                <form>
-                  <p>
-                    Второе прочтение:
-                    <input type="date" name="calendar">
-                    <input type="submit" value="Отправить">
-                  </p>
-                </form>
+                <p>Второе прочтение:
+                  <b>{{ book_detail.second_reading }}</b>
+                </p>
               </li>
               <li class="book__content-about-item">
-                <form>
-                  <p>
-                    Третье прочтение:
-                    <input type="date" name="calendar">
-                    <input type="submit" value="Отправить">
-                  </p>
-                </form>
+                <p>Третье прочтение:
+                  <b>{{ book_detail.third_reading }}</b>
+                </p>
               </li>
               <li class="book__content-about-item star-rating">
-                <p>Рейтинг:&nbsp;</p>
+                <p>Рейтинг:&nbsp;
                   <div class="star-rating__wrap">
-                    <input class="star-rating__input" id="star-rating-5" type="radio" name="rating" value="5">
-                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-5" title="5 out of 5 stars"></label>
-                    <input class="star-rating__input" id="star-rating-4" type="radio" name="rating" value="4">
-                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-4" title="4 out of 5 stars"></label>
-                    <input class="star-rating__input" id="star-rating-3" type="radio" name="rating" value="3">
-                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-3" title="3 out of 5 stars"></label>
-                    <input class="star-rating__input" id="star-rating-2" type="radio" name="rating" value="2">
-                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-2" title="2 out of 5 stars"></label>
-                    <input class="star-rating__input" id="star-rating-1" type="radio" name="rating" value="1">
-                    <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-1" title="1 out of 5 stars"></label>
+                    {% if book_detail.rating %}
+                      {% if book_detail.rating == 5 %}
+                        <input class="star-rating__input" id="star-rating-5-5" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star fa-lg" for="star-rating-5-5" title="5 out of 5 stars"></label>
+                        <input class="star-rating__input" id="star-rating-5-4" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star fa-lg" for="star-rating-5-4" title="5 out of 5 stars"></label>
+                        <input class="star-rating__input" id="star-rating-5-3" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star fa-lg" for="star-rating-5-3" title="5 out of 5 stars"></label>
+                        <input class="star-rating__input" id="star-rating-5-2" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star fa-lg" for="star-rating-5-2" title="5 out of 5 stars"></label>
+                        <input class="star-rating__input" id="star-rating-5-1" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star fa-lg" for="star-rating-5-1" title="5 out of 5 stars"></label>
+                      {% elif book_detail.rating == 4 %}
+                        <input class="star-rating__input" id="star-rating-4-5" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-4-5" title="5 out of 5 stars"></label>
+                        <input class="star-rating__input" id="star-rating-4-4" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star fa-lg" for="star-rating-4-4" title="5 out of 5 stars"></label>
+                        <input class="star-rating__input" id="star-rating-4-3" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star fa-lg" for="star-rating-4-3" title="5 out of 5 stars"></label>
+                        <input class="star-rating__input" id="star-rating-4-2" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star fa-lg" for="star-rating-4-2" title="5 out of 5 stars"></label>
+                        <input class="star-rating__input" id="star-rating-4-1" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star fa-lg" for="star-rating-4-1" title="5 out of 5 stars"></label>
+                      {% elif book_detail.rating == 3 %}
+                        <input class="star-rating__input" id="star-rating-3-5" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-3-5" title="5 out of 5 stars"></label>
+                        <input class="star-rating__input" id="star-rating-3-4" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-3-4" title="5 out of 5 stars"></label>
+                        <input class="star-rating__input" id="star-rating-3-3" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star fa-lg" for="star-rating-3-3" title="5 out of 5 stars"></label>
+                        <input class="star-rating__input" id="star-rating-3-2" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star fa-lg" for="star-rating-3-2" title="5 out of 5 stars"></label>
+                        <input class="star-rating__input" id="star-rating-3-1" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star fa-lg" for="star-rating-3-1" title="5 out of 5 stars"></label>
+                      {% elif book_detail.rating == 2 %}
+                        <input class="star-rating__input" id="star-rating-2-5" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-2-5" title="5 out of 5 stars"></label>
+                        <input class="star-rating__input" id="star-rating-2-4" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-2-4" title="5 out of 5 stars"></label>
+                        <input class="star-rating__input" id="star-rating-2-3" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-2-3" title="5 out of 5 stars"></label>
+                        <input class="star-rating__input" id="star-rating-2-2" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star fa-lg" for="star-rating-2-2" title="5 out of 5 stars"></label>
+                        <input class="star-rating__input" id="star-rating-2-1" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star fa-lg" for="star-rating-2-1" title="5 out of 5 stars"></label>
+                      {% else %}
+                        <input class="star-rating__input" id="star-rating-1-5" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-1-5" title="5 out of 5 stars"></label>
+                        <input class="star-rating__input" id="star-rating-1-4" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-1-4" title="5 out of 5 stars"></label>
+                        <input class="star-rating__input" id="star-rating-1-3" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-1-3" title="5 out of 5 stars"></label>
+                        <input class="star-rating__input" id="star-rating-1-2" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-1-2" title="5 out of 5 stars"></label>
+                        <input class="star-rating__input" id="star-rating-1-1" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star fa-lg" for="star-rating-1-1" title="5 out of 5 stars"></label>
+                      {% endif %}
+                    {% else %}
+                      <b>Без оценки</b>
+                    {% endif %}
                   </div>
+                </p>
               </li>
               <li class="book__content-about-item">
                 <p>Скачать файл книги:</p>
@@ -96,9 +150,7 @@
           </div>
           <div class="book__content-descr">
             <strong>Аннотация</strong>
-            <p>
-              Всем нам снятся кошмары. Проснувшись, одни сразу забывают их, другие стараются забыть. Неспособные забыть прячут безумие своего подсознания вдали от всех. Бояться, что люди окрестят их сумасшедшими. При этом не страшатся сойти с ума в действительности, окружив себя больной фантазией скрытых бесов. А их нужно изредка выгуливать, что я и делаю. Все мои истории собраны из образов, пришедших ко мне в сновидениях. Пускай лучше мои демоны бродят по страницам написанных мною книг. <br>На мрачных междустрочных улочках им все дозволено. Здесь их владения и я их не способен контролировать. Под звуки хаоса они выплясывают на пепелище из человеческих страхов. Играют с воображением, выстраивая хрустальные сосуды. Наполняют их яростью, любовью, злобой, насилием и радостью, а затем швыряют о каменные стены под дикий гогот. Они такие какие есть и я их принимаю. Со своими бесами лучше быть в гармонии, иначе они завладеют тобой и выйдут на темные улицы реальных городов. <br>10 лет скалолазания питали мое подсознание самыми яркими впечатлениями. Горы стёрли все границы. На вершине ты чувствуешь, что нет ничего невозможного. Затем, я наконец осознал, что книги обладают магией гор и на их страницах возможно все.
-            </p>
+            <p>{{ book_detail.annotation }}</p>
           </div>
           <div class="book__content-review">
             <strong>Рецензия</strong>

@@ -149,7 +149,6 @@
     .container__book-list {
       padding-bottom: 30px;
     }
-
     .book-list-right__item {
       flex: 0 0 33%;
       max-width: 33%;
@@ -220,6 +219,14 @@
     .book-list-right__item {
       flex: 0 0 50%;
       max-width: 50%;
+    }
+    .book__content-img {
+      height: 300px;
+      grid-column: span 2;
+    }
+    .book__content-about {
+      grid-column: span 2;
+      grid-row: 2/2;
     }
   }
     

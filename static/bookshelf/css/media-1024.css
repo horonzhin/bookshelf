@@ -68,16 +68,6 @@
       background-image: url(/static/bookshelf/img/author-466x332-1024.jpg);
     }
 
-    .book__content-img {
-      height: 600px;
-      grid-column: span 2;
-    }
-
-    .book__content-about {
-      grid-column: span 2;
-      grid-row: 2/2;
-    }
-
     .book__content-descr {
       grid-row: 3/3
     }

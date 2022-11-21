@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import HttpResponseRedirect
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, DetailView
 
 from books.models import Basket, Book, BookCategory, Author
 from common.views import TitleMixin
@@ -47,17 +47,13 @@ class AuthorBooksListView(TitleMixin, ListView):
         return context
 
 
-class BookDetail(TemplateView):
-    template_name = 'books/book_detail.html'
-
-
 # Класс ниже отвечает за детальное отображение отдельных страниц книг на примере одного шаблона.
 # Работает с одной записью из бд, а не со всем списком, как ListView. Название файла шаблона должно соответсвовать
 # следующему "название модели(в нижнем регистре)_detail.html"
-# class BookDetailView(DetailView):
-#     model = Book
-#     template_name = 'books/book_detail.html'
-#     context_object_name = 'book'
+class BookDetailView(DetailView):
+    model = Book
+    template_name = 'books/book_detail.html'
+    context_object_name = 'book_detail'
 
 
 # декоратор доступа, чтобы представление не срабатывало если user не авторизован
