@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 
-from config import DB_PASSWORD, DB_USER
+from config import DB_PASSWORD, DB_USER, EMAIL_PASSWORD
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-@h-z&ll^&2u0n6nr_x&s^&8(q@(9#(e1tu77*dspe^)nxm31b@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 DOMAIN_NAME = 'http://localhost:8000'
 
@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'bookshelf.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'bookshelf_db',
         'USER': DB_USER,
         'PASSWORD': DB_PASSWORD,
@@ -162,7 +162,7 @@ LOGOUT_REDIRECT_URL = '/'
 # EMAIL_HOST = 'smtp.yandex.com'
 # EMAIL_PORT = 465
 # EMAIL_HOST_USER = 'info-bookshelf-pass@yandex.ru'
-# EMAIL_HOST_PASSWORD = 'info-bookshelf-password'
+# EMAIL_HOST_PASSWORD = EMAIL_PASSWORD
 # EMAIL_USE_SSL = True
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

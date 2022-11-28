@@ -1,0 +1,1 @@
+[{"model": "books.genre", "pk": 1, "fields": {"name": "Фэнтези"}}, {"model": "books.genre", "pk": 2, "fields": {"name": "Психологический триллер"}}, {"model": "books.genre", "pk": 3, "fields": {"name": "Мистика"}}]

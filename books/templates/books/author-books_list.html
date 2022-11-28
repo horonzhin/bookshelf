@@ -19,14 +19,14 @@
         {% for book in author_books %}
         <div class="col-lg-3 col-md-6 mb-4 book-list-right__item">
           <div class="card h-100">
-            <a href="#" class="book-list__link">
+            <a href="{{ book.id }}" class="book-list__link">
               <img class="card-img-top book-list-right__img"
                    src="{{ book.cover.url }}"
                    alt="">
             </a>
             <div class="card-body">
               <h4 class="card-title book-list__title-book">
-                <a href="#" class="book-list__link">{{ book.title }}</a>
+                <a href="{{ book.id }}" class="book-list__link">{{ book.title }}</a>
               </h4>
               <h5 class="book-list__price-book">{{ book.price }} руб.</h5>
               {% for author in book.author.all %}

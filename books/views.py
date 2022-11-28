@@ -13,7 +13,7 @@ class BookListView(TitleMixin, ListView):
     # более понятное название, нужно добавить атрибут context_object_name и дать ему более подходящее название.
     context_object_name = 'books_list'
     paginate_by = 8
-    title = 'Книжная полка'
+    title = 'Bookshelf - Книжная полка'
 
     # метод для фильтрации по категориям
     def get_queryset(self):
@@ -32,13 +32,7 @@ class AuthorBooksListView(TitleMixin, ListView):
     template_name = 'books/author-books_list.html'
     context_object_name = 'author_books_list'
     paginate_by = 8
-    title = 'Книги автора'
-
-    # метод для фильтрации по категориям
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        category_id = self.kwargs.get('category_id')
-        return queryset.filter(category_id=category_id) if category_id else queryset
+    title = 'Bookshelf - Книги автора'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -89,17 +83,17 @@ class IndexView(TitleMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # показываем последние три добавленные книги
-        context['books'] = Book.objects.all().order_by('-id')[:3]
+        context['books'] = Book.objects.filter(user=self.request.user.id).order_by('-id')[:3]
         # показываем последние две добавленные книги в избранное (id избранного = 1)
-        context['favourite'] = Book.objects.all().order_by('category_id')[:2]
+        context['favourite'] = Book.objects.filter(user=self.request.user.id).order_by('category_id')[:2]
         return context
 
 
 class About(TitleMixin, TemplateView):
     template_name = 'books/about.html'
-    title = 'Об авторе'
+    title = 'Bookshelf - Об авторе'
 
 
 class Contacts(TitleMixin, TemplateView):
     template_name = 'books/contacts.html'
-    title = 'Контакты'
+    title = 'Bookshelf - Контакты'
