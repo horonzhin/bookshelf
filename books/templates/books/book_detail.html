@@ -10,7 +10,9 @@
       <div class="container book__container">
         <h2 class="book__title title-h2">{{ book_detail.title }}</h2>
         <div class="book__content grid">
-          <img class="book__content-img" src="{{ book_detail.cover.url }}" alt="">
+          <a href="{{ book_detail.cover.url }}" target="_blank">
+            <img class="book__content-img" src="{{ book_detail.cover.url }}" alt="">
+          </a>
           <div class="book__content-about">
             <ul class="book__content-about-list">
               <li class="book__content-about-item">

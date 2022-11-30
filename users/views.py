@@ -12,7 +12,7 @@ from users.models import EmailVerification, User
 class UserLoginView(TitleMixin, LoginView):
     template_name = 'users/login.html'
     form_class = UserLoginForm
-    title = 'Авторизация'
+    title = 'Bookshelf - Авторизация'
 
 
 class UserRegistrationView(TitleMixin, SuccessMessageMixin, CreateView):
@@ -21,21 +21,21 @@ class UserRegistrationView(TitleMixin, SuccessMessageMixin, CreateView):
     template_name = 'users/register.html'
     success_url = reverse_lazy('users:login')
     success_message = 'Поздравляю! Вы успешно зарегистрировались.'
-    title = 'Регистрация'
+    title = 'Bookshelf - Регистрация'
 
 
 class UserProfileView(TitleMixin, UpdateView):
     model = User
     form_class = UserProfileForm
     template_name = 'users/profile.html'
-    title = 'Личный кабинет'
+    title = 'Bookshelf - Личный кабинет'
 
     def get_success_url(self):
         return reverse_lazy('users:profile', args=(self.object.id,))
 
 
 class EmailVerificationView(TitleMixin, TemplateView):
-    title = 'Подтверждение электронной почты'
+    title = 'Bookshelf - Подтверждение электронной почты'
     template_name = 'users/email_verification.html'
 
     # сверяем полученный code с тем что в бд

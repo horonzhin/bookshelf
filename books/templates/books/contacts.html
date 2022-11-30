@@ -1,7 +1,8 @@
 {% extends 'books/base.html' %}
-{% load static %}
+{% load static cache %}
 
 {% block content %}
+  {% cache 60 contacts %}
     <section class="contacts section" id="contacts">
       <div class="container contacts__container">
         <h2 class="contacts__title title-h2">Контакты</h2>
@@ -53,6 +54,7 @@
         </div>
       </div>
     </section>
+  {% endcache %}
 {% endblock %}
 
 {% block script_end %}

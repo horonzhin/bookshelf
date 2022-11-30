@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import bookshelf.wsgi
 from http import HTTPStatus
 

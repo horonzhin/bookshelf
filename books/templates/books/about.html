@@ -1,7 +1,8 @@
 {% extends 'books/base.html' %}
-{% load static %}
+{% load static cache %}
 
 {% block content %}
+  {% cache 60 about %}
     <section class="about section about__sheet" id="about">
       <div class="container about__container">
         <h2 class="about__title title-h2 about__title-sheet">Об&nbsp;авторе</h2>
@@ -20,4 +21,5 @@
         </div>
       </div>
     </section>
+  {% endcache %}
 {% endblock %}
