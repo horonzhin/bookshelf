@@ -1,5 +1,5 @@
 {% extends 'books/base.html' %}
-{% load static cache %}
+{% load static cache humanize %}
 
 {% block css %}
   <link href="{% static '/bookshelf/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -29,7 +29,7 @@
                 <h4 class="card-title book-list__title-book">
                   <a href="{{ book.id }}" class="book-list__link">{{ book.title }}</a>
                 </h4>
-                <h5 class="book-list__price-book">{{ book.price }} руб.</h5>
+                <h5 class="book-list__price-book">{{ book.price|intcomma }} руб.</h5>
                 {% for author in book.author.all %}
                   <p class="card-text book-list__author-book">{{ author.last_name }} {{ author.first_name }}</p>
                 {% endfor %}

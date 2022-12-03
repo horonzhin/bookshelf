@@ -25,6 +25,7 @@ urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     path('books/', include('books.urls', namespace='books')),
     path('users/', include('users.urls', namespace='users')),
+    path('orders/', include('orders.urls', namespace='orders')),
     path('contacts/', views.Contacts.as_view(), name='contacts'),
     path('about/', views.About.as_view(), name='about'),
     path('accounts/', include('allauth.urls')),
