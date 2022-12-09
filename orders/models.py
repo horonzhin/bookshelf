@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 
+from books.models import Basket
 from users.models import User
 
 
@@ -24,6 +25,17 @@ class Order(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     status = models.SmallIntegerField(default=CREATED, choices=STATUSES)
     initiator = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def update_after_payment(self):
+        # меняем статус, сохраняем историю покупки и чистим корзину после оплаты
+        baskets = Basket.objects.filter(user=self.initiator)
+        self.status = self.PAID
+        self.basket_history = {
+            'purchased_items': [basket.de_json() for basket in baskets],
+            'total_sum': float(baskets.total_sum()),
+        }
+        baskets.delete()
+        self.save()
 
     class Meta:
         verbose_name = 'Заказ'

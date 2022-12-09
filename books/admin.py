@@ -47,7 +47,7 @@ class BookAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Сведения о книги', {
             'fields': ('title', 'author', 'cover', 'isbn', 'published', 'genre',
-                       'cycle', 'series', 'annotation', 'price')
+                       'cycle', 'series', 'annotation', 'price', 'stripe_book_price_id')
         }),
         ('Блок читателя', {
             'fields': ('status', 'rating', 'first_reading', 'second_reading', 'third_reading')

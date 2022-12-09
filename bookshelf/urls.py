@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import include, path
 
 from books import views
+from orders.views import stripe_webhook_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,6 +29,7 @@ urlpatterns = [
     path('orders/', include('orders.urls', namespace='orders')),
     path('contacts/', views.Contacts.as_view(), name='contacts'),
     path('about/', views.About.as_view(), name='about'),
+    path('webhook/stripe/', stripe_webhook_view, name='stripe_webhook'),
     path('accounts/', include('allauth.urls')),
 ]
 

@@ -1,6 +1,11 @@
+import stripe
+
 from django.db import models
+from django.conf import settings
 
 from users.models import User
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
 class BookCategory(models.Model):
@@ -95,6 +100,28 @@ class Book(models.Model):
     category = models.ForeignKey(BookCategory, blank=True, default=None, null=True, on_delete=models.CASCADE,
                                  related_name='book', verbose_name='Категория')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='book', verbose_name='Читатель')
+    stripe_book_price_id = models.CharField(max_length=128, null=True, blank=True,
+                                            verbose_name='Price id книги в Stripe')
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        # перед выполнением метода super проверяем есть ли у книг автора stripe_product_price, если нет,
+        # то подгружаем его из strip по api
+        # todo = сделать так чтобы stripe_book_price_id сохранялся только у книг автора
+        if not self.stripe_book_price_id:
+            stripe_product_price = self.create_stripe_product_price()
+            self.stripe_book_price_id = stripe_product_price['id']
+        super(Book, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
+
+    def create_stripe_product_price(self):
+        # создаем в stripe цену книги
+        stripe_product = stripe.Product.create(name=self.title)
+        stripe_product_price = stripe.Price.create(
+            product=stripe_product['id'],
+            # unit_amount содержит сумму в копейках
+            unit_amount=round(self.price * 100),
+            currency="rub"
+        )
+        return stripe_product_price
 
     class Meta:
         ordering = ['title']
@@ -115,6 +142,17 @@ class BasketQuerySet(models.QuerySet):
     def total_quantity(self):
         return sum(basket.quantity for basket in self)
 
+    def stripe_products(self):
+        # заполняем данные для stripe (что и сколько будем покупать)
+        line_items = []
+        for basket in self:
+            item = {
+                'price': basket.book.stripe_book_price_id,
+                'quantity': basket.quantity,
+            }
+            line_items.append(item)
+        return line_items
+
 
 class Basket(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -126,6 +164,16 @@ class Basket(models.Model):
 
     def sum(self):
         return self.book.price * self.quantity
+
+    def de_json(self):
+        # возвращает словарь с данными о корзине
+        basket_item = {
+            'product_name': self.book.title,
+            'quantity': self.quantity,
+            'price': float(self.book.price),
+            'sum': float(self.sum()),
+        }
+        return basket_item
 
     class Meta:
         verbose_name = 'Корзина'
