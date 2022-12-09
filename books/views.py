@@ -1,8 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import HttpResponseRedirect
-from django.views.generic import ListView, TemplateView, DetailView
+from django.views.generic import DetailView, ListView, TemplateView
 
-from books.models import Basket, Book, BookCategory, Author
+from books.models import Basket, Book, BookCategory
 from common.views import TitleMixin
 
 

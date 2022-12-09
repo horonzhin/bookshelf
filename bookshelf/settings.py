@@ -12,7 +12,8 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 
-from config import DB_PASSWORD, DB_USER, EMAIL_PASSWORD, STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET
+from config import (DB_PASSWORD, DB_USER, EMAIL_PASSWORD, STRIPE_SECRET_KEY,
+                    STRIPE_WEBHOOK_SECRET)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

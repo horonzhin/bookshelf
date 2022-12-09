@@ -1,0 +1,53 @@
+{% extends 'books/base.html' %}
+{% load static humanize %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static '/bookshelf/css/auth.css' %}">
+<link rel="stylesheet" href="{% static '/bookshelf/css/bootstrap.min.css' %}">
+{% endblock %}
+
+{% block script_in_head %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/js/all.min.js" crossorigin="anonymous"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container-auth container_register">
+    <div class="card card__register shadow-lg">
+        <div class="card-header-orders card-header">
+            <h3 class="text-center font-weight-light">Заказ #{{ object.id }}</h3>
+        </div>
+            <table class="table table-order">
+                <thead>
+                <tr class="table-light">
+                    <th scope="col">Название</th>
+                    <th scope="col">Кол-во</th>
+                    <th scope="col">Цена</th>
+                    <th scope="col">Сумма</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for purchased_item in object.basket_history.purchased_items %}
+                    <tr>
+                    <th scope="row">
+                        {{ purchased_item.product_name }}
+                    </th>
+                    <td>{{ purchased_item.quantity }}</td>
+                    <td>{{ purchased_item.price|intcomma }} руб.</td>
+                    <td>{{ purchased_item.sum|intcomma }} руб.</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <p class="order-sum h4">Итого: {{ object.basket_history.total_sum|intcomma }} руб.</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block script_end %}
+<script src="{% static '/bookshelf/js/auth_admin.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+<script src="{% static '/bookshelf/js/bootstrap.bundle.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+<script src="{% static '/bookshelf/js/jquery.min.js' %}"></script>
+{% endblock %}
