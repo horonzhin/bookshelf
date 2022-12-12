@@ -38,7 +38,7 @@ class StatusAdmin(admin.ModelAdmin):
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ['title', 'cycle', 'series', 'status', 'isbn', 'published', 'price']
+    list_display = ['title', 'cycle', 'series', 'status', 'isbn', 'published', 'price', 'user']
     # todo = добавить возможность добавления в общий вид полей с типом ManyToMany
     list_filter = ['status']
     search_fields = ['title', 'isbn']
@@ -50,7 +50,7 @@ class BookAdmin(admin.ModelAdmin):
                        'cycle', 'series', 'annotation', 'price', 'stripe_book_price_id')
         }),
         ('Блок читателя', {
-            'fields': ('status', 'rating', 'first_reading', 'second_reading', 'third_reading')
+            'fields': ('user', 'status', 'rating', 'first_reading', 'second_reading', 'third_reading')
         }),
         ('Категории', {
             'fields': ('category',)
