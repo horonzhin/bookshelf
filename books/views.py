@@ -36,7 +36,7 @@ class AuthorBooksListView(TitleMixin, ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        # todo = сортирую авторов по id (я первый), но лучше сделать сортировку по фамилии.
+        # сортирую авторов по id (я первый)
         context['author_books'] = Book.objects.all().filter(author=1)
         return context
 
@@ -48,6 +48,12 @@ class BookDetailView(DetailView):
     model = Book
     template_name = 'books/book_detail.html'
     context_object_name = 'book_detail'
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # сортирую авторов по id (я первый)
+        context['author_books'] = Book.objects.all().filter(author=1)
+        return context
 
 
 # декоратор доступа, чтобы представление не срабатывало если user не авторизован

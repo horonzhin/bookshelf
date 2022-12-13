@@ -68,18 +68,20 @@ class Series(models.Model):
         return self.name
 
 
-class Status(models.Model):
-    name = models.CharField(max_length=100, verbose_name='Статус')
-
-    class Meta:
-        verbose_name = 'Статус'
-        verbose_name_plural = 'Статусы'
-
-    def __str__(self):
-        return self.name
-
-
 class Book(models.Model):
+    READING = 0
+    FINISHED = 1
+    TO_READ = 2
+    INTEREST = 3
+    DROPPED = 4
+    STATUSES = (
+        (READING, 'Читаю'),
+        (FINISHED, 'Закончена'),
+        (TO_READ, 'Буду читать'),
+        (INTEREST, 'Заинтересовала'),
+        (DROPPED, 'Заброшена'),
+    )
+
     title = models.CharField(max_length=100, db_index=True, verbose_name='Название')
     author = models.ManyToManyField(Author, related_name='book', verbose_name='Автор')
     cover = models.ImageField(upload_to='book_covers', verbose_name='Обложка')
@@ -91,8 +93,9 @@ class Book(models.Model):
     series = models.ForeignKey(Series, blank=True, default=None, null=True, on_delete=models.CASCADE,
                                related_name='book', verbose_name='Серия')
     annotation = models.TextField(verbose_name='Аннотация')
-    status = models.ForeignKey(Status, on_delete=models.CASCADE, related_name='book', verbose_name='Статус')
-    rating = models.IntegerField(blank=True, default=None, null=True, verbose_name='Рейтинг')
+    status = models.SmallIntegerField(choices=STATUSES, default=FINISHED, verbose_name='Статус')
+    rating = models.SmallIntegerField(choices=((0, '0'), (1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5'),),
+                                      default=0, verbose_name='Рейтинг')
     first_reading = models.DateField(blank=True, default=None, null=True, verbose_name='Первое прочтение')
     second_reading = models.DateField(blank=True, default=None, null=True, verbose_name='Второе прочтение')
     third_reading = models.DateField(blank=True, default=None, null=True, verbose_name='Третье прочтение')
@@ -102,6 +105,13 @@ class Book(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='book', verbose_name='Читатель')
     stripe_book_price_id = models.CharField(max_length=128, null=True, blank=True,
                                             verbose_name='Price id книги в Stripe')
+    text = models.FileField(upload_to='book_texts', blank=True, default=None, null=True, verbose_name='Текст книги')
+
+    def get_author(self):
+        return ",".join([str(p) for p in self.author.all()])
+
+    def get_genre(self):
+        return ",".join([str(p) for p in self.genre.all()])
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         # перед выполнением метода super проверяем есть ли у книг автора stripe_product_price, если нет,

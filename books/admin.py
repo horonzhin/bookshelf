@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from books.models import (Author, Basket, Book, BookCategory, Cycle, Genre,
-                          Series, Status)
+                          Series)
 
 
 @admin.register(BookCategory)
@@ -31,15 +31,10 @@ class SeriesAdmin(admin.ModelAdmin):
     list_display = ['name']
 
 
-@admin.register(Status)
-class StatusAdmin(admin.ModelAdmin):
-    list_display = ['name']
-
-
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ['title', 'cycle', 'series', 'status', 'isbn', 'published', 'price', 'user']
-    # todo = добавить возможность добавления в общий вид полей с типом ManyToMany
+    list_display = ['title', 'get_author', 'get_genre', 'cycle', 'series',
+                    'status', 'isbn', 'published', 'price', 'user']
     list_filter = ['status']
     search_fields = ['title', 'isbn']
     # todo = добавить возможность поиска по полю с типом ManyToMany
@@ -47,13 +42,10 @@ class BookAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Сведения о книги', {
             'fields': ('title', 'author', 'cover', 'isbn', 'published', 'genre',
-                       'cycle', 'series', 'annotation', 'price', 'stripe_book_price_id')
+                       'cycle', 'series', 'annotation', 'price', 'stripe_book_price_id', 'text')
         }),
         ('Блок читателя', {
-            'fields': ('user', 'status', 'rating', 'first_reading', 'second_reading', 'third_reading')
-        }),
-        ('Категории', {
-            'fields': ('category',)
+            'fields': ('user', 'status', 'rating', 'category', 'first_reading', 'second_reading', 'third_reading')
         })
     )
 
