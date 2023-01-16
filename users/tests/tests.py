@@ -25,7 +25,7 @@ class UserRegistrationViewTest(TestCase):
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertEqual(response.context_data['title'], 'Bookshelf - Регистрация')
-        self.assertEqual(response.template_name[0], 'users/register.html')
+        self.assertTemplateUsed(response, 'users/register.html')
 
     def test_user_registration_post_success(self):
         username = self.data['username']

@@ -189,6 +189,7 @@
     --black: #202020;
     --dark_grey: rgba(32, 32, 32, 0.85);
     --grey: #4A4A4A;
+    --green: #28a745;
     --medium_grey: #999999;
     --light_grey: #CACACA;
     --dark_white: #E9E9E9;
@@ -1519,6 +1520,11 @@
     object-fit: cover;
     width: 100%;
     height: 300px;
+  }
+
+  .btn-add {
+    color: var(--white);
+    background-color: var(--green);
   }
 
   /* author-books_list */

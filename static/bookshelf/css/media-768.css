@@ -222,6 +222,7 @@
     }
     .book__content-img {
       height: 300px;
+      width: 200%;
       grid-column: span 2;
     }
     .book__content-about {

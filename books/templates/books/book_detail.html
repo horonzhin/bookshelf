@@ -3,12 +3,12 @@
 
 {% block css %}
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{% static '/bookshelf/css/auth.css' %}">
 {% endblock %}
 
 {% block content %}
     <section class="book section">
       <div class="container book__container">
-        <h2 class="book__title title-h2">{{ book_detail.title }}</h2>
         <div class="book__content grid">
           <a href="{{ book_detail.cover.url }}" target="_blank">
             <img class="book__content-img" src="{{ book_detail.cover.url }}" alt="">
@@ -157,6 +157,9 @@
                   {% endif %}
                 {% endif %}
               {% endif %}
+            <div class="form-row">
+              <input class="btn-auth btn-info btn-block" type="submit" value="Изменить">
+            </div>
             </ul>
           </div>
           <div class="book__content-descr">

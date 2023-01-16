@@ -16,4 +16,3 @@ def send_email_verification(user_id):
     record = EmailVerification.objects.create(code=uuid.uuid4(), user=user, expiration=expiration)
     record.send_verification_email()
 
-# todo = не отправляет письма. В celery received есть, а succeeded нет. Если вернуть логику в формы, все ОК.
