@@ -9,61 +9,65 @@ from common.views import TitleMixin
 
 
 class BookListView(TitleMixin, ListView):
+    """View of the reader's book list"""
     model = Book
     template_name = 'books/books_list.html'
-    # список книг полученных из базы будет доступен в шаблоне через переменную object_list, чтобы придать ему
-    # более понятное название, нужно добавить атрибут context_object_name и дать ему более подходящее название.
-    context_object_name = 'books_list'
+    context_object_name = 'books_list'  # for a clear reference in the template, because by default -> object_list
     paginate_by = 8
-    title = 'Bookshelf - Книжная полка'
+    title = 'Bookshelf - Your bookshelf'
 
-    # метод для фильтрации по категориям
     def get_queryset(self):
+        """Filtering books by category, if the category is not selected, we show everything"""
         queryset = super().get_queryset()
         category_id = self.kwargs.get('category_id')
         return queryset.filter(category_id=category_id) if category_id else queryset
 
     def get_context_data(self, *, object_list=None, **kwargs):
+        """Give the books filtered by category to the template"""
         context = super().get_context_data(**kwargs)
         context['categories'] = BookCategory.objects.all()
         return context
 
 
 class AuthorBooksListView(TitleMixin, ListView):
+    """View of the author's book list"""
     model = Book
     template_name = 'books/author-books_list.html'
     context_object_name = 'author_books_list'
     paginate_by = 8
-    title = 'Bookshelf - Книги автора'
+    title = "Bookshelf - Author's books"
 
     def get_context_data(self, *, object_list=None, **kwargs):
+        """Author's book filter (author id = 1)"""
         context = super().get_context_data(**kwargs)
-        # сортирую авторов по id (я первый)
         context['author_books'] = Book.objects.all().filter(author=1)
         return context
 
 
-# Класс ниже отвечает за детальное отображение отдельных страниц книг на примере одного шаблона.
-# Работает с одной записью из бд, а не со всем списком, как ListView. Название файла шаблона должно соответсвовать
-# следующему "название модели(в нижнем регистре)_detail.html"
 class BookDetailView(DetailView):
+    """Detailed view of information about the book"""
     model = Book
     template_name = 'books/book_detail.html'
     context_object_name = 'book_detail'
 
     def get_context_data(self, *, object_list=None, **kwargs):
+        """
+        1. Detailed viewing of the author's books (author_id = 1) contains other data
+        2. Show the title of the book
+        """
         context = super().get_context_data(**kwargs)
-        # сортирую авторов по id (я первый)
         context['author_books'] = Book.objects.all().filter(author=1)
+        context['title'] = f'Bookshelf - {self.object.title}'
         return context
 
 
 class AddBookView(TitleMixin, CreateView):
+    """View of adding a new book"""
     model = Book
     form_class = AddBookForm
     template_name = 'books/add_book.html'
     success_url = reverse_lazy('books')
-    title = 'Bookshelf - Добавление книги'
+    title = 'Bookshelf - Adding a book'
 
     # def form_valid(self, form):
     #     form.save()
@@ -97,50 +101,53 @@ class AddBookView(TitleMixin, CreateView):
     # todo = не сохраняет в базу книгу и перенаправляет на страницу books/author-books/1/?
 
 
-# декоратор доступа, чтобы представление не срабатывало если user не авторизован
-@login_required
+@login_required  # the view will not work if the user is not logged in
 def basket_add(request, book_id):
+    """Adding books to the basket"""
     book = Book.objects.get(id=book_id)
-    # возьмем все корзины user с определенной книгой.
-    baskets = Basket.objects.filter(user=request.user, book=book)
+    baskets = Basket.objects.filter(user=request.user, book=book)  # take all user baskets with a certain book
 
-    # Если корзины нет, то она создатся, если есть, то увеличется кол-во на 1
-    if not baskets.exists():
+    if not baskets.exists():  # If there is no basket, it will be created.
         Basket.objects.create(user=request.user, book=book, quantity=1)
-    else:
+    else:  # if there is a basket, the quantity will increase by 1
         basket = baskets.first()
         basket.quantity += 1
         basket.save()
 
-    # после вернем user туда где он был
-    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])  # return the user to where he was
 
 
 @login_required
 def basket_remove(request, basket_id):
+    """Delete basket"""
     basket = Basket.objects.get(id=basket_id)
     basket.delete()
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
 class IndexView(TitleMixin, TemplateView):
+    """Home Page View"""
     template_name = 'books/index.html'
     title = 'Bookshelf'
 
     def get_context_data(self, **kwargs):
+        """
+        1. Show last three added books
+        2. Show the last two books added to favorites
+        """
         context = super().get_context_data(**kwargs)
-        # показываем последние три добавленные книги
         context['books'] = Book.objects.filter(user=self.request.user.id).order_by('-id')[:3]
-        # показываем последние две добавленные книги в избранное (id избранного = 1)
         context['favourite'] = Book.objects.filter(user=self.request.user.id).order_by('category_id')[:2]
         return context
 
 
 class About(TitleMixin, TemplateView):
+    """View of the page about the author"""
     template_name = 'books/about.html'
-    title = 'Bookshelf - Об авторе'
+    title = 'Bookshelf - About the author'
 
 
 class Contacts(TitleMixin, TemplateView):
+    """View of the contact page"""
     template_name = 'books/contacts.html'
-    title = 'Bookshelf - Контакты'
+    title = 'Bookshelf - Contacts'

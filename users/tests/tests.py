@@ -4,7 +4,7 @@ import bookshelf.wsgi
 from datetime import timedelta
 from http import HTTPStatus
 
-from django.test import TestCase
+from django.test import TestCase, Client
 from django.urls import reverse
 from django.utils.timezone import now
 
@@ -12,6 +12,7 @@ from users.models import EmailVerification, User
 
 
 class UserRegistrationViewTest(TestCase):
+    """Test of the registration page"""
 
     def setUp(self):
         self.data = {
@@ -21,13 +22,26 @@ class UserRegistrationViewTest(TestCase):
         self.path = reverse('users:register')
 
     def test_user_registration_get(self):
+        """
+        1. Checking page loading.
+        2. Context loading check (title).
+        3. Checking the correct template.
+        """
         response = self.client.get(self.path)
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertEqual(response.context_data['title'], 'Bookshelf - Регистрация')
+        self.assertEqual(response.context_data['title'], 'Bookshelf - Registration')
         self.assertTemplateUsed(response, 'users/register.html')
 
     def test_user_registration_post_success(self):
+        """
+        1. Checking that the user is not yet in the database. After that, we pass the user's data to the response
+        2. Checking for a redirect
+        3. Checking for the correct redirect page
+        4. Checking that a new user has been created in the database
+        5. Checking that email verification was created in the database, which is linked to the user.
+        6. Checking that the expiration date (without time) is correct
+        """
         username = self.data['username']
         self.assertFalse(User.objects.filter(username=username).exists())
         response = self.client.post(self.path, self.data)
@@ -51,8 +65,64 @@ class UserRegistrationViewTest(TestCase):
         #  выдает пустой QuerySet
 
     def test_user_registration_post_error(self):
+        """
+        Checking for an error if the user already exists:
+        1. Checking page loading.
+        2. Checking that there is an error message in the content
+        """
         User.objects.create(username=self.data['username'])
         response = self.client.post(self.path, self.data)
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertContains(response, 'Пользователь с таким именем уже существует.', html=True)
+
+
+class UserLoginViewTest(TestCase):
+    """Login page test"""
+
+    def setUp(self):
+        self.data = {'username': 'username', 'password': '1234567qQ'}
+        self.path = reverse('users:login')
+        self.user = User.objects.create(**self.data)
+        self.client = Client()
+
+    def test_user_login_get(self):
+        """
+        1. Checking page loading.
+        2. Context loading check (title).
+        3. Checking the correct template.
+        """
+        response = self.client.get(self.path)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertEqual(response.context_data['title'], 'Bookshelf - Authorization')
+        self.assertTemplateUsed(response, 'users/login.html')
+
+    def test_user_login_post_success(self):
+        """
+        Checking for authorization:
+        1. Checking for a redirect upon successful authorization
+        2. Checking for the correct redirect page
+        """
+        self.client.login(username=self.user.username, password=self.user.password)
+        response = self.client.post(self.path, {'user_id': self.user.id})
+
+        self.assertEqual(response.status_code, HTTPStatus.FOUND)
+        self.assertRedirects(response, reverse('/'))
+
+        # todo = работает только с HTTPStatus.OK, но должен быть HTTPStatus.FOUND и редирект на главную
+
+    def test_user_login_post_error(self):
+        """
+        Checking for an error if the user already exists:
+        1. Checking page loading.
+        2. Checking that there is an error message in the content
+        """
+        self.client.login(username=self.user.username, password='1234')
+        response = self.client.post(self.path, self.data)
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertContains(response, 'Пожалуйста, введите правильные имя пользователя и пароль. '
+                                      'Оба поля могут быть чувствительны к регистру.', html=True)
+
+        # todo = даже если указать, что пользователь логинится с правильными данными тест проходит

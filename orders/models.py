@@ -27,7 +27,12 @@ class Order(models.Model):
     initiator = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def update_after_payment(self):
-        # меняем статус, сохраняем историю покупки и чистим корзину после оплаты
+        """
+        After payment:
+        1. Status change
+        2. Saving purchase history
+        3. Cleaning the trash
+        """
         baskets = Basket.objects.filter(user=self.initiator)
         self.status = self.PAID
         self.basket_history = {

@@ -9,11 +9,11 @@ from users.tasks import send_email_verification
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control',
-        'placeholder': 'Введите имя пользователя'
+        'placeholder': 'Username'
     }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'form-control',
-        'placeholder': 'Введите пароль'
+        'placeholder': 'Password'
     }))
 
     class Meta:
@@ -24,38 +24,39 @@ class UserLoginForm(AuthenticationForm):
 class UserRegistrationForm(UserCreationForm):
     first_name = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control',
-        'placeholder': 'Введите имя'
+        'placeholder': 'First name'
     }))
     last_name = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control',
-        'placeholder': 'Введите фамилию'
+        'placeholder': 'Last name'
     }))
     username = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control',
-        'placeholder': 'Введите имя пользователя',
+        'placeholder': 'Username',
         'aria-describedby': 'usernameHelp'
     }))
     email = forms.EmailField(widget=forms.EmailInput(attrs={
         'class': 'form-control',
-        'placeholder': 'Введите адрес эл. почты',
+        'placeholder': 'E-mail',
         'aria-describedby': 'emailHelp'
     }))
     password1 = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'form-control',
-        'placeholder': 'Введите пароль'
+        'placeholder': 'Password'
     }))
     password2 = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'form-control',
-        'placeholder': 'Подтвердите пароль'
+        'placeholder': 'Confirm the password'
     }))
 
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'username', 'email', 'password1', 'password2')
 
-    # как создастся объект пользователя выполнится этот метод (отправка письма с подтверждением почты)
     def save(self, commit=True):
+        """At the time of user creation, transfer to celery the task of sending an email with a delay."""
         user = super(UserRegistrationForm, self).save(commit=True)
+        # if you do not call the delay method, the code will be executed sequentially, not in parallel
         send_email_verification.delay(user.id)
         return user
 

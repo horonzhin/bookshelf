@@ -7,20 +7,20 @@ from orders.models import Order
 class OrderForm(forms.ModelForm):
     first_name = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control',
-        'placeholder': 'Введите имя'
+        'placeholder': 'First name'
     }))
     last_name = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control',
-        'placeholder': 'Введите фамилию'
+        'placeholder': 'Last name'
     }))
     email = forms.CharField(widget=forms.EmailInput(attrs={
         'class': 'form-control',
-        'placeholder': 'Введите адрес эл. почты',
+        'placeholder': 'E-mail',
         'aria-describedby': 'emailHelp'
     }))
     address = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control',
-        'placeholder': 'Введите адрес доставки'
+        'placeholder': 'Delivery address'
     }))
 
     class Meta:

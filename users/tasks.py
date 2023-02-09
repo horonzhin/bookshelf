@@ -9,10 +9,10 @@ from users.models import EmailVerification, User
 
 @shared_task
 def send_email_verification(user_id):
+    """The task is to send a confirmation email to the user's email address."""
     user = User.objects.get(id=user_id)
-    # время дейтвия ссылки закончится через 48 часов
-    expiration = now() + timedelta(hours=48)
-    # uuid.uuid4() - создаст уникальный код.
+    expiration = now() + timedelta(hours=48)  # link valid for 48 hours
     record = EmailVerification.objects.create(code=uuid.uuid4(), user=user, expiration=expiration)
-    record.send_verification_email()
+    # Made an record in the database. uuid.uuid4() - will create a unique code.
+    record.send_verification_email()  # Sent an email
 

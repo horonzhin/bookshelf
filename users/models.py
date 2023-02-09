@@ -6,30 +6,31 @@ from django.urls import reverse
 from django.utils.timezone import now
 
 
-# для того чтобы расширить имеющуюся модель user, а не создавать все поля заново, наследуемся от AbstractUser
 class User(AbstractUser):
+    """
+    Use the existing User model (AbstractUser) so as not to create all the fields again.
+    Added custom email confirmation field.
+    """
     image = models.ImageField(upload_to='users_images', null=True, blank=True, default=None)
-    # проверка на подтверждение почты user
     is_verified_email = models.BooleanField(default=False)
 
 
 class EmailVerification(models.Model):
-    # для каждого user генерируется уникальная ссылка с кодом
-    code = models.UUIDField(unique=True)
+    """Mail confirmation model"""
+    code = models.UUIDField(unique=True)  # a unique link with a code is generated for each user
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
-    # срок окончания действия ссылки
-    expiration = models.DateTimeField()
+    expiration = models.DateTimeField()  # link end date
 
     def __str__(self):
         return f'EmailVerification object for {self.user.email}'
 
-    # метод отправки email с подтверждением почты
     def send_verification_email(self):
+        """Method of sending email with mail confirmation"""
         link = reverse('users:email_verification', kwargs={'email': self.user.email, 'code': self.code})
         verification_link = f'{settings.DOMAIN_NAME}{link}'
-        subject = f'Подтверждение учетной записи для {self.user.username}'
-        message = 'Для подтверждения учетной записи для {} перейдите по ссылке: {}'.format(
+        subject = f'Account verification for {self.user.username}'
+        message = 'To verify an account for {} follow this link: {}'.format(
             self.user.email,
             verification_link
         )
@@ -41,8 +42,8 @@ class EmailVerification(models.Model):
             fail_silently=False,
         )
 
-    # метод для проверки срока годности ссылки
     def is_expired(self):
+        """Method for checking the expiration date of a link"""
         return True if now() >= self.expiration else False
 
     class Meta:

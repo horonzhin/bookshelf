@@ -108,14 +108,16 @@ class Book(models.Model):
     text = models.FileField(upload_to='book_texts', blank=True, default=None, null=True, verbose_name='Текст книги')
 
     def get_author(self):
+        """To display authors in the admin panel list_display"""
         return ",".join([str(p) for p in self.author.all()])
 
     def get_genre(self):
+        """To display genres in the admin panel list_display"""
         return ",".join([str(p) for p in self.genre.all()])
 
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
-        # перед выполнением метода super проверяем есть ли у книг автора stripe_product_price, если нет,
-        # то подгружаем его из strip по api
+        """Before saving to the database, if the author's books have an empty stripe_product_price field,
+        load the price from stripe via the API"""
         # todo = сделать так чтобы stripe_book_price_id сохранялся только у книг автора
         if not self.stripe_book_price_id:
             stripe_product_price = self.create_stripe_product_price()
@@ -123,12 +125,15 @@ class Book(models.Model):
         super(Book, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
 
     def create_stripe_product_price(self):
-        # создаем в stripe цену книги
+        """
+        Create a product (book) price in stripe:
+        1. Create a product in stripe
+        2. Create a price for the product in stripe
+        """
         stripe_product = stripe.Product.create(name=self.title)
         stripe_product_price = stripe.Price.create(
             product=stripe_product['id'],
-            # unit_amount содержит сумму в копейках
-            unit_amount=round(self.price * 100),
+            unit_amount=round(self.price * 100),  # indicate the amount in kopecks
             currency="rub"
         )
         return stripe_product_price
@@ -142,18 +147,21 @@ class Book(models.Model):
         return self.title
 
 
-# создадим свои методы в queryset корзины для того чтобы их вызывать в шаблонах,
-# т.к. обычные методы queryset нельзя вызывать в шаблонах.
-# Для подсчета общего кол-ва книг и общей суммы книг в корзине.
 class BasketQuerySet(models.QuerySet):
+    """
+    Create our own methods in the basket queryset to call them in templates.
+    Regular queryset methods cannot be called in templates
+    """
     def total_sum(self):
+        """Total sum of books in the basket"""
         return sum(basket.sum() for basket in self)
 
     def total_quantity(self):
+        """Total quantity of books in the basket"""
         return sum(basket.quantity for basket in self)
 
     def stripe_products(self):
-        # заполняем данные для stripe (что и сколько будем покупать)
+        """Fill in the data (price and quantity) for stripe"""
         line_items = []
         for basket in self:
             item = {
@@ -169,14 +177,15 @@ class Basket(models.Model):
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     quantity = models.PositiveSmallIntegerField(default=0)
     created_timestamp = models.DateTimeField(auto_now_add=True)
-    # когда мы обращаемся к Basket.objects.all() будем дополнять его нашим queryset с нашими методами
+    # when we access Basket.objects.all() we will complement it with our queryset with our methods from BasketQuerySet
     objects = BasketQuerySet.as_manager()
 
     def sum(self):
+        """Total sum of books"""
         return self.book.price * self.quantity
 
     def de_json(self):
-        # возвращает словарь с данными о корзине
+        """Returns a dictionary with data about the basket to save the history of orders"""
         basket_item = {
             'product_name': self.book.title,
             'quantity': self.quantity,
@@ -193,7 +202,7 @@ class Basket(models.Model):
         return f'Корзина для {self.user.username} | Книга: {self.book.title}'
 
 
-# class Review(models.Model):
+# class BookReview(models.Model):
 #     user_name = models.CharField(max_length=30)
 #     text = models.TextField(max_length=3000)
 #     review = models.ForeignKey(Book, default=None, null=True, on_delete=models.CASCADE)
