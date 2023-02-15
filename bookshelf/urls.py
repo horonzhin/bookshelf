@@ -31,6 +31,7 @@ urlpatterns = [
     path('about/', views.About.as_view(), name='about'),
     path('webhook/stripe/', stripe_webhook_view, name='stripe_webhook'),
     path('accounts/', include('allauth.urls')),
+    path('api/', include('api.urls'), name='api'),
 ]
 
 if settings.DEBUG:
