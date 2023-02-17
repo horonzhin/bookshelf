@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import bookshelf.wsgi
 from datetime import timedelta
 from http import HTTPStatus
 
-from django.test import TestCase, Client
+from django.test import Client, TestCase
 from django.urls import reverse
 from django.utils.timezone import now
 
+import bookshelf.wsgi
 from users.models import EmailVerification, User
 
 

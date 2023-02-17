@@ -1,5 +1,4 @@
 import stripe
-
 from django.conf import settings
 from django.db import models
 
@@ -193,6 +192,22 @@ class Basket(models.Model):
             'sum': float(self.sum()),
         }
         return basket_item
+
+    @classmethod  # a method related to a class, not an object
+    def create_or_update(cls, book_id, user):
+        """Add or update books in the basket"""
+        baskets = Basket.objects.filter(user=user, book_id=book_id)  # take all user baskets with a certain book
+
+        if not baskets.exists():  # If there is no basket, it will be created.
+            obj = Basket.objects.create(user=user, book_id=book_id, quantity=1)
+            is_created = True  # return a variable so that in the API we understand that the object has been created
+            return obj, is_created
+        else:  # if there is a basket, the quantity will increase by 1
+            basket = baskets.first()
+            basket.quantity += 1
+            basket.save()
+            is_created = False  # return a variable so that in the API we understand that the object has been changed
+            return basket, is_created
 
     class Meta:
         verbose_name = 'Корзина'

@@ -3,7 +3,7 @@ import datetime
 
 from django import forms
 
-from books.models import Book, Author, Genre, Cycle, Series, BookCategory
+from books.models import Author, Book, BookCategory, Cycle, Genre, Series
 
 
 class AddBookForm(forms.ModelForm):

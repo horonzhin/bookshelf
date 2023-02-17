@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-import bookshelf.wsgi
 from http import HTTPStatus
 
 from django.test import TestCase
 from django.urls import reverse
 
+import bookshelf.wsgi
 from books.models import Book, BookCategory
 
 

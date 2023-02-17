@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views.generic import DetailView, ListView, TemplateView, CreateView
+from django.views.generic import CreateView, DetailView, ListView, TemplateView
 
 from books.forms import AddBookForm
 from books.models import Basket, Book, BookCategory
@@ -104,16 +104,7 @@ class AddBookView(TitleMixin, CreateView):
 @login_required  # the view will not work if the user is not logged in
 def basket_add(request, book_id):
     """Adding books to the basket"""
-    book = Book.objects.get(id=book_id)
-    baskets = Basket.objects.filter(user=request.user, book=book)  # take all user baskets with a certain book
-
-    if not baskets.exists():  # If there is no basket, it will be created.
-        Basket.objects.create(user=request.user, book=book, quantity=1)
-    else:  # if there is a basket, the quantity will increase by 1
-        basket = baskets.first()
-        basket.quantity += 1
-        basket.save()
-
+    Basket.create_or_update(book_id, request.user)
     return HttpResponseRedirect(request.META['HTTP_REFERER'])  # return the user to where he was
 
 

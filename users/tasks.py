@@ -15,4 +15,3 @@ def send_email_verification(user_id):
     record = EmailVerification.objects.create(code=uuid.uuid4(), user=user, expiration=expiration)
     # Made an record in the database. uuid.uuid4() - will create a unique code.
     record.send_verification_email()  # Sent an email
-
