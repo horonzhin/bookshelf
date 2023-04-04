@@ -49,6 +49,12 @@ class BookAdmin(admin.ModelAdmin):
         })
     )
 
+    def get_author(self, object):
+        """To display authors in the admin panel list_display"""
+        return ",".join([str(p) for p in object.author.all()])
+
+    get_author.short_description = 'Авторы'
+
     def save_model(self, request, obj, form, change):
         obj.user = request.user
         obj.save()
