@@ -110,6 +110,8 @@ class Book(models.Model):
         """Before saving to the database, if the author's books have an empty stripe_product_price field,
         load the price from stripe via the API"""
         # todo = сделать так чтобы stripe_book_price_id сохранялся только у книг автора
+        # todo = избавиться от обновления цены при сохранении. Выглядит как костыль.
+        # todo = добавить периодические задачи от Celery, которые запускаются один раз в N-ое время и выполняют скрипт
         if not self.stripe_book_price_id:
             stripe_product_price = self.create_stripe_product_price()
             self.stripe_book_price_id = stripe_product_price['id']
