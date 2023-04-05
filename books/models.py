@@ -106,14 +106,6 @@ class Book(models.Model):
                                             verbose_name='Price id книги в Stripe')
     text = models.FileField(upload_to='book_texts', blank=True, default=None, null=True, verbose_name='Текст книги')
 
-    def get_author(self):
-        """To display authors in the admin panel list_display"""
-        return ",".join([str(p) for p in self.author.all()])
-
-    def get_genre(self):
-        """To display genres in the admin panel list_display"""
-        return ",".join([str(p) for p in self.genre.all()])
-
     def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
         """Before saving to the database, if the author's books have an empty stripe_product_price field,
         load the price from stripe via the API"""

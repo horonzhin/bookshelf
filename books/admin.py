@@ -33,11 +33,11 @@ class SeriesAdmin(admin.ModelAdmin):
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
-    list_display = ['title', 'get_author', 'get_genre', 'cycle', 'series',
+    list_display = ['title', 'cycle', 'series', 'get_genre', 'get_author',
                     'status', 'isbn', 'published', 'price', 'user']
     list_filter = ['status']
-    search_fields = ['title', 'isbn']
-    # todo = добавить возможность поиска по полю с типом ManyToMany
+    # author__first_name and author__last_name adds the ability to search by field MtM
+    search_fields = ['title', 'isbn', 'author__first_name', 'author__last_name']
     readonly_fields = ['user']
     fieldsets = (
         ('Сведения о книги', {
@@ -48,6 +48,18 @@ class BookAdmin(admin.ModelAdmin):
             'fields': ('user', 'status', 'rating', 'category', 'first_reading', 'second_reading', 'third_reading')
         })
     )
+
+    def get_author(self, object):
+        """To display authors in the admin panel list_display"""
+        return ",".join([str(p) for p in object.author.all()])
+
+    get_author.short_description = 'Авторы'
+
+    def get_genre(self, object):
+        """To display genres in the admin panel list_display"""
+        return ",".join([str(p) for p in object.genre.all()])
+
+    get_genre.short_description = 'Жанры'
 
     def save_model(self, request, obj, form, change):
         obj.user = request.user
