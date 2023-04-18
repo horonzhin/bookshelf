@@ -36,6 +36,17 @@ class AddBookForm(forms.ModelForm):
         widget=forms.SelectDateWidget(years=year_range, empty_label=('Year', 'Month', 'Day')),
         required=False)
 
+    class Meta:
+        model = Book
+        # В редких случаях можно передавать __all__ не рекомендуется, так как можешь что-то пропустить.
+        # Например, в этом случае было так, что поле пользователя требовалось сразу при заполнении формы.
+        # И __all__ не давал возможность переопределить метод form_valid() в AddBookView. Пусть лучше будет
+        # много полей в fields, но они зато будут все перечислены и будет понятно, что находится в самой форме
+        fields = [
+            'cover', 'title', 'author', 'isbn', 'published', 'genre', 'cycle', 'new_cycle', 'series', 'annotation',
+            'status', 'rating', 'category', 'first_reading', 'second_reading', 'third_reading'
+        ]
+
     def __init__(self, *args, **kwargs):
         """Making the cycle field not required"""
         super(AddBookForm, self).__init__(*args, **kwargs)
@@ -59,7 +70,3 @@ class AddBookForm(forms.ModelForm):
 
     # todo = проверить логику создания нового цикла, если в списке нет нужного.
     # todo = создать такую же логику на series, author и genre
-
-    class Meta:
-        model = Book
-        fields = '__all__'

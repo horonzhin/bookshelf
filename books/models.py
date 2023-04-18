@@ -117,7 +117,7 @@ class Book(models.Model):
         if not self.stripe_book_price_id:
             stripe_product_price = self.create_stripe_product_price()
             self.stripe_book_price_id = stripe_product_price['id']
-        super(Book, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
+        return super(Book, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
 
     def create_stripe_product_price(self):
         """

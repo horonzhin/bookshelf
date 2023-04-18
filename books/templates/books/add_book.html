@@ -17,7 +17,7 @@
         <h3 class="text-center font-weight-light">Новая книга</h3>
       </div>
       <div class="card-body">
-        <form action="{% url 'books:book-detail' user.id %}" method="post" enctype="multipart/form-data">
+        <form action="{% url 'books:add_book' %}" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="form-row">
             <label for="{{ form.isbn.id_for_label }}">ISBN:</label>

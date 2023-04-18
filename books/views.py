@@ -66,8 +66,15 @@ class AddBookView(TitleMixin, CreateView):
     model = Book
     form_class = AddBookForm
     template_name = 'books/add_book.html'
-    success_url = reverse_lazy('books')
+    success_url = reverse_lazy('books:books_list')
     title = 'Bookshelf - Adding a book'
+
+    def form_valid(self, form):
+        # Здесь мы перед валидацией формы добавляем в instance пользователя, так как это поле
+        # у тебя обязательное. Всегда проверяй form.errors (в шаблонах или в методах), чтобы понять,
+        # почему не происходит удаление
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
     # def form_valid(self, form):
     #     form.save()
