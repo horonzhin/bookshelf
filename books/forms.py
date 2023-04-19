@@ -62,4 +62,9 @@ class AddBookForm(forms.ModelForm):
 
     class Meta:
         model = Book
-        fields = '__all__'
+        # If specify __all__ because of the required user field,
+        # it will not be possible to override the form_valid() method in AddBookView
+        fields = [
+            'cover', 'title', 'author', 'isbn', 'published', 'genre', 'cycle', 'new_cycle', 'series', 'annotation',
+            'status', 'rating', 'category', 'first_reading', 'second_reading', 'third_reading'
+        ]

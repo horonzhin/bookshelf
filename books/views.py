@@ -66,39 +66,13 @@ class AddBookView(TitleMixin, CreateView):
     model = Book
     form_class = AddBookForm
     template_name = 'books/add_book.html'
-    success_url = reverse_lazy('books')
+    success_url = reverse_lazy('books:books_list')
     title = 'Bookshelf - Adding a book'
 
-    # def form_valid(self, form):
-    #     form.save()
-    #     return HttpResponseRedirect('/')
-
-    # Вариант решения со stackoverflow:
-    # https://stackoverflow.com/questions/8996451/save-new-foreign-key-with-django-form
-    # https://stackoverflow.com/questions/9010852/catching-validation-errors-in-django-forms
-
-    # def testone(request):
-    #     if request.method == 'POST':  # If the form has been submitted...
-    #         form = FilmForm(request.POST)  # A form bound to the POST data
-    #
-    #         if form.is_valid():  # All validation rules pass
-    #             if form.cleaned_data['new_studio']:
-    #                 studio, created = Studio.objects.get_or_create(name=form.cleaned_data['new_studio'])
-    #                 new_film = form.save(commit=False)
-    #                 new_film.studio = studio
-    #             else:
-    #                 new_film = form
-    #
-    #             new_film.save()
-    #             return HttpResponseRedirect('/')  # Redirect after POST
-    #         else:
-    #             form = FilmForm()  # An unbound form
-    #
-    #         return render_to_response('testone.html', {
-    #             'form': form
-    #         }, context_instance=RequestContext(request))
-
-    # todo = не сохраняет в базу книгу и перенаправляет на страницу books/author-books/1/?
+    def form_valid(self, form):
+        # add the user to the "instance" because the field is required.
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 @login_required  # the view will not work if the user is not logged in

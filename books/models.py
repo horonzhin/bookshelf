@@ -98,7 +98,7 @@ class Book(models.Model):
     first_reading = models.DateField(blank=True, default=None, null=True, verbose_name='Первое прочтение')
     second_reading = models.DateField(blank=True, default=None, null=True, verbose_name='Второе прочтение')
     third_reading = models.DateField(blank=True, default=None, null=True, verbose_name='Третье прочтение')
-    price = models.DecimalField(blank=True, default=None, null=True, max_digits=8, decimal_places=2)
+    price = models.DecimalField(blank=True, default=0, null=True, max_digits=8, decimal_places=2)
     category = models.ForeignKey(BookCategory, blank=True, default=None, null=True, on_delete=models.CASCADE,
                                  related_name='book', verbose_name='Категория')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='book', verbose_name='Читатель')
@@ -115,7 +115,7 @@ class Book(models.Model):
         if not self.stripe_book_price_id:
             stripe_product_price = self.create_stripe_product_price()
             self.stripe_book_price_id = stripe_product_price['id']
-        super(Book, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
+        return super(Book, self).save(force_insert=False, force_update=False, using=None, update_fields=None)
 
     def create_stripe_product_price(self):
         """
