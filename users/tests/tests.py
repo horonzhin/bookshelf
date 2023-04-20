@@ -83,7 +83,7 @@ class UserLoginViewTest(TestCase):
     def setUp(self):
         self.data = {'username': 'username', 'password': '1234567qQ'}
         self.path = reverse('users:login')
-        self.user = User.objects.create(**self.data)
+        self.user = User.objects.create_user(**self.data)
         self.client = Client()
 
     def test_user_login_get(self):
@@ -104,11 +104,19 @@ class UserLoginViewTest(TestCase):
         1. Checking for a redirect upon successful authorization
         2. Checking for the correct redirect page
         """
-        self.client.login(username=self.user.username, password=self.user.password)
-        response = self.client.post(self.path, {'user_id': self.user.id})
+
+        # Метод login() авторизует у тебя пользователя. Удобно, когда нужно в каких-то тестах
+        # иметь авторизованного пользователя. Здесь же тест на авторизацию, поэтому тут точно вызов
+        # login() не нужен. У тебя авторизация происходит в методе post(), когда данные юзера
+        # отправляются во вьюху LoginView
+        # self.client.login(username=self.user.username, password=self.user.password)
+
+        # С теми данными, что ты авторизуешься в самой форме, то же самое и нужно отправлять в методе post().
+        # И лучше брать сами данные из self.data, которые используются изначально для создания юзера.
+        response = self.client.post(self.path, {'username': self.data['username'], 'password': self.data['password']})
 
         self.assertEqual(response.status_code, HTTPStatus.FOUND)
-        self.assertRedirects(response, reverse('/'))
+        self.assertRedirects(response, reverse('index'))
 
         # todo = работает только с HTTPStatus.OK, но должен быть HTTPStatus.FOUND и редирект на главную
 
