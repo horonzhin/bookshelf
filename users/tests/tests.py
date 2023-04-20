@@ -83,6 +83,9 @@ class UserLoginViewTest(TestCase):
     def setUp(self):
         self.data = {'username': 'username', 'password': '1234567qQ'}
         self.path = reverse('users:login')
+        # Здесь при создании юзера (только с ним такое отличие) нужно вызывать метод не create(),
+        # а create_user(), так как только в этом методе правильно передается пароль и хешируется.
+        # Можешь вовнутрь залезть в этот метод, чтобы посмотреть весь процесс)
         self.user = User.objects.create_user(**self.data)
         self.client = Client()
 
