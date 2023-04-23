@@ -28,6 +28,8 @@ class BookListView(TitleMixin, ListView):
         context['categories'] = BookCategory.objects.all()
         return context
 
+    # todo = при сортировке по категории выдает все книги даже те у которых эта категория не задана
+
 
 class AuthorBooksListView(TitleMixin, ListView):
     """View of the author's book list"""

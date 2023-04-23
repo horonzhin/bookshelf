@@ -44,8 +44,16 @@
 - Frontend на React.
 ***
 ## Установка
-```
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py runserver
-```
+
+`pip install -r requirements.txt` - установить зависимости
+
+`python manage.py migrate` - применить миграции
+
+`sudo service redis-server start` - запустить сервер redis в ubuntu
+
+`redis-cli` - подключиться к серверу redis в ubuntu
+
+`celery -A bookshelf worker -l INFO -P solo` - запустить celery для win
+
+`python manage.py runserver` - запустить проект
+***
