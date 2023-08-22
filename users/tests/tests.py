@@ -9,6 +9,7 @@ from django.utils.timezone import now
 
 import bookshelf.wsgi
 from users.models import EmailVerification, User
+from users.tasks import send_email_verification
 
 
 class UserRegistrationViewTest(TestCase):
@@ -51,18 +52,29 @@ class UserRegistrationViewTest(TestCase):
         self.assertRedirects(response, reverse('users:login'))
         self.assertTrue(User.objects.filter(username=username).exists())
 
-        # check creating of email verification
-        # email_verification = EmailVerification.objects.filter(user__username=username)
-        # self.assertTrue(email_verification.exists())
-        # self.assertEqual(
-        #     email_verification.first().expiration.date(),
-        #     (now() + timedelta(hours=48)).date()
-        # )
+        # Если обратиться к EmailVerification.objects.filter(user__username=username) выдаст пустой QuerySet.
+        # Создается тестовый юзер с id=1. Но send_email_verification запускается в celery и происходит создание
+        # EmailVerification в реальной базе для user c id=1 (это admin). send_email_verification передается id=1 и
+        # он берет по этому id не тестового юзера, а реального из базы id=1 (это admin). Если в тестах отфильтровать
+        # по user_id=1 он выдаст пустой QuerySet, т.к. берет user_id=1 из тестовой базы, в то время как в реальной
+        # бд для admin существует EmailVerification.
+        # Для этого:
+        # - перед отправкой задачи в celery, создаем объект пользователя в тесте и используем его вместо username
+        # - после этого отправляем задачу celery и проверяем, что EmailVerification создается для этого пользователя.
 
-        # todo = EmailVerification.objects.filter(user__username=username) выдает пустой QuerySet.
-        #  Данные в форме заполнены верно. Создается тестовый юзер с id=1. В send_email_verification передается id=1 и
-        #  он берет по этому id не тестового юзера, а реального из базы id=1 (это admin). Но даже если отфильтровать
-        #  по user_id=1 он выдаст пустой QuerySet хоть для admin и существует EmailVerification
+        # Create a test user
+        created_user = User.objects.get(username=username)
+
+        # Trigger the celery task
+        send_email_verification(created_user.id)
+
+        # check creating of email verification
+        email_verification = EmailVerification.objects.filter(user=created_user)
+        self.assertTrue(email_verification.exists())
+        self.assertEqual(
+            email_verification.first().expiration.date(),
+            (now() + timedelta(hours=48)).date()
+        )
 
     def test_user_registration_post_error(self):
         """
