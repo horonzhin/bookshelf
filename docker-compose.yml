@@ -1,0 +1,63 @@
+version: '3'
+
+services:
+  db:
+    container_name: bookshelf-db
+    image: postgres:13
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+
+  redis:
+    container_name: bookshelf-redis
+    image: redis:6
+    ports:
+      - "6379:6379"
+
+  web:
+    container_name: bookshelf-web
+    build: .
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DJANGO_SETTINGS_MODULE=bookshelf.settings
+      - DEBUG=${DEBUG}
+      - SECRET_KEY=${SECRET_KEY}
+      - DOMAIN_NAME=${DOMAIN_NAME}
+      - REDIS_HOST=redis
+      - REDIS_PORT=${REDIS_PORT}
+      - DATABASE_NAME=${DATABASE_NAME}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_HOST=db
+      - DATABASE_PORT=${DATABASE_PORT}
+      - EMAIL_HOST=${EMAIL_HOST}
+      - EMAIL_PORT=${EMAIL_PORT}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+      - EMAIL_USE_SSL=${EMAIL_USE_SSL}
+      - STRIPE_PUBLIC_KEY=${STRIPE_PUBLIC_KEY}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
+
+  celery_worker:
+    container_name: bookshelf-celery
+    build: .
+    command: celery -A bookshelf worker -l INFO -P solo
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+    environment:
+      - DJANGO_SETTINGS_MODULE=bookshelf.settings
+      - DATABASE_HOST=db
+      - REDIS_HOST=redis
+      - REDIS_PORT=${REDIS_PORT}
