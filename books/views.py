@@ -20,7 +20,10 @@ class BookListView(TitleMixin, ListView):
         """Filtering books by category, if the category is not selected, we show everything"""
         queryset = super().get_queryset()
         category_id = self.kwargs.get('category_id')
-        return queryset.filter(category_id=category_id) if category_id else queryset
+        print("Received category_id:", category_id)  # для отладки (УДАЛИТЬ!)
+        filtered_queryset = queryset.filter(category_id=category_id) if category_id else queryset
+        print("Filtered queryset:", filtered_queryset)  # для отладки (УДАЛИТЬ!)
+        return filtered_queryset
 
     def get_context_data(self, *, object_list=None, **kwargs):
         """Give the books filtered by category to the template"""

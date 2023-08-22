@@ -38,12 +38,20 @@
             {{ form.author }}
           </div>
           <div class="form-row">
+            <label for="{{ form.new_author.id_for_label }}">Новый автор (если в списке выше нет нужного):</label>
+            {{ form.new_author }}
+          </div>
+          <div class="form-row">
             <label for="{{ form.published.id_for_label }}">Дата публикации:</label>
             {{ form.published }}
           </div>
           <div class="form-row">
             <label for="{{ form.genre.id_for_label }}">Жанр:</label>
             {{ form.genre }}
+          </div>
+          <div class="form-row">
+            <label for="{{ form.new_genre.id_for_label }}">Новый жанр (если в списке выше нет нужного):</label>
+            {{ form.new_genre }}
           </div>
           <div class="form-row">
             <label for="{{ form.cycle.id_for_label }}">Цикл:</label>
@@ -56,6 +64,10 @@
           <div class="form-row">
             <label for="{{ form.series.id_for_label }}">Серия:</label>
             {{ form.series }}
+          </div>
+          <div class="form-row">
+            <label for="{{ form.new_series.id_for_label }}">Новая серия (если в списке выше нет нужного):</label>
+            {{ form.new_series }}
           </div>
           <div class="form-row">
             <label for="{{ form.annotation.id_for_label }}">Аннотация:</label>
