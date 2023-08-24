@@ -83,7 +83,6 @@ class UserRegistrationViewTest(TestCase):
         2. Checking that there is an error message in the content
         """
         User.objects.create(username=self.data['username'])
-        print(User.objects.get(username='username'))
         response = self.client.post(self.path, self.data)
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
