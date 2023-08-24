@@ -43,7 +43,7 @@ class AddBookForm(forms.ModelForm):
         required=False)
 
     def __init__(self, *args, **kwargs):
-        """Making the cycle field not required"""
+        """Making fields not required"""
         super(AddBookForm, self).__init__(*args, **kwargs)
         self.fields['cycle'].required = False
         self.fields['series'].required = False
@@ -71,28 +71,27 @@ class AddBookForm(forms.ModelForm):
             series, created = Series.objects.get_or_create(name=new_series)
             self.cleaned_data['series'] = series
 
-        # genre = self.cleaned_data.get('genre')
-        # new_genre = self.cleaned_data.get('new_genre')
-        # # If both fields are empty, we give an error
-        # if not genre and not new_genre:
-        #     raise forms.ValidationError('You need to select a genre from the list, or create a new genre!')
-        # else:
-        #     genre, created = Genre.objects.get_or_create(name=new_genre)
-        #     self.cleaned_data['genre'] = genre
+        genre = self.cleaned_data.get('genre')
+        new_genre = self.cleaned_data.get('new_genre')
+        # If both fields are empty, we give an error
+        if not genre and not new_genre:
+            raise forms.ValidationError('You need to select a genre from the list, or create a new genre!')
+        else:
+            genre, created = Genre.objects.get_or_create(name=new_genre)
+            self.cleaned_data['genre'] = [genre]
 
-        # author = self.cleaned_data.get('author')
-        # new_author = self.cleaned_data.get('new_author')
-        # # If both fields are empty, we give an error
-        # if not author and not new_author:
-        #     raise forms.ValidationError('You need to select a author from the list, or create a new author!')
-        # # If the only "author" field is empty, create a new "author" in the db with the name from the "new_author" field
-        # elif not author:
-        #     author, created = Author.objects.get_or_create(name=new_author)
-        #     self.cleaned_data['author'] = author
+        author = self.cleaned_data.get('author')
+        new_author = self.cleaned_data.get('new_author')
+        # If both fields are empty, we give an error
+        if not author and not new_author:
+            raise forms.ValidationError('You need to select a author from the list, or create a new author!')
+        # If the only "author" field is empty, create a new "author" in the db with the name from the "new_author" field
+        elif not author:
+            first_name, last_name = new_author.split()
+            author, created = Author.objects.get_or_create(first_name=first_name, last_name=last_name)
+            self.cleaned_data['author'] = [author]
 
         return super(AddBookForm, self).clean()
-
-    # todo = создать такую же логику на author и genre
 
     class Meta:
         model = Book

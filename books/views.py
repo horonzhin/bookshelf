@@ -79,6 +79,19 @@ class AddBookView(TitleMixin, CreateView):
         form.instance.user = self.request.user
         return super().form_valid(form)
 
+        new_genre = form.cleaned_data.get('new_genre')
+        if new_genre:
+            genre, created = Genre.objects.get_or_create(name=new_genre)
+            self.object.genre.add(genre)  # add a new genre to a book
+
+        new_author = form.cleaned_data.get('new_author')
+        if new_author:
+            first_name, last_name = new_author.split()
+            author, created = Author.objects.get_or_create(first_name=first_name, last_name=last_name)
+            self.object.author.add(author)  # add a new author to a book
+
+        return response
+
 
 @login_required  # the view will not work if the user is not logged in
 def basket_add(request, book_id):
